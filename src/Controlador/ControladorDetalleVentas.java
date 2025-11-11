@@ -7,6 +7,7 @@ package Controlador;
 import Implementacion.DetalleVentasDAO;
 import Modelo.ModeloDetalleVenta;
 import Vistas.PanelDetalleVenta;
+import Vistas.PanelVentas;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,34 +17,33 @@ import javax.swing.JOptionPane;
  *
  * @author luisd
  */
-
 public class ControladorDetalleVentas {
 
-    private final PanelDetalleVenta vista;
+    private final PanelVentas vista;
     private final DetalleVentasDAO dao;
     private final ModeloDetalleVenta modelo;
 
-    public ControladorDetalleVentas(PanelDetalleVenta vista) {
+    public ControladorDetalleVentas(PanelVentas vista) {
         this.vista = vista;
         this.dao = new DetalleVentasDAO();
         this.modelo = new ModeloDetalleVenta();
 
         // === Asignar eventos ===
-        this.vista.agregar.addMouseListener(new MouseAdapter() {
+        this.vista.btnHacerVenta.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 agregarDetalle();
             }
         });
 
-        this.vista.actualizar.addMouseListener(new MouseAdapter() {
+        this.vista.btnActualizar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 actualizarDetalle();
             }
         });
 
-        this.vista.btnEliminar.addMouseListener(new MouseAdapter() {
+        this.vista.btnEliminarVenta.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 eliminarDetalle();
@@ -134,5 +134,6 @@ public class ControladorDetalleVentas {
         vista.txtCantidad.setText("");
         vista.txtPrecioVenta.setText("");
         vista.txtDescuento.setText("");
+        vista.txtImpuesto.setText("");
     }
 }

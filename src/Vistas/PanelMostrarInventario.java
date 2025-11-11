@@ -13,17 +13,71 @@ import Modelo.ModeloInventario;
  */
 public class PanelMostrarInventario extends javax.swing.JPanel {
 
+    private ControladorInventario controlador;
+
     /**
      * Creates new form PanelInventario
      */
     public PanelMostrarInventario() {
         initComponents();
 
-        ModeloInventario modelo = new ModeloInventario(this);
-        ControladorInventario controlador = new ControladorInventario(modelo);
+        // Instancia del controlador (enlaza la vista con la lógica)
+        controlador = new ControladorInventario(this);
 
-        setControlador(controlador);
     }
+    //esta parte solo funciona para correr este jframe
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VistaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VistaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VistaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VistaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                javax.swing.JFrame frame = new javax.swing.JFrame("Prueba - Cuentas por Pagar");
+                frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+                frame.getContentPane().add(new PanelMostrarInventario());
+                frame.pack(); // ajusta tamaño al contenido
+                frame.setSize(850, 700); // o fija el tamaño manualmente
+                frame.setLocationRelativeTo(null); // centra la ventana
+                frame.setVisible(true);
+            }
+        });
+    }
+
+    public javax.swing.JTextField txtIdInventario;
+    public javax.swing.JTextField txtIdProducto;
+    public javax.swing.JTextField txtCantidad;
+    public javax.swing.JTextField txtStockAnterior;
+    public javax.swing.JTextField txtStockActual;
+    public javax.swing.JTextField txtMovimiento;
+    public javax.swing.JTextField txtMotivo;
+    public javax.swing.JTextField txtIdUsuario;
+
+    public javax.swing.JPanel btnAgregar;
+    public javax.swing.JPanel btnActualizar;
+    public javax.swing.JPanel btnEliminar;
+    public javax.swing.JPanel btnBuscar;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -168,8 +222,4 @@ public class PanelMostrarInventario extends javax.swing.JPanel {
     private javax.swing.JLabel titulo1;
     // End of variables declaration//GEN-END:variables
 
-    public void setControlador(ControladorInventario controlador) {
-        btnRegistroInventario.addMouseListener(controlador);
-        btnRegistroVenta.addMouseListener(controlador);
-    }
 }

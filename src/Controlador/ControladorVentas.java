@@ -57,7 +57,15 @@ public class ControladorVentas {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 limpiarCampos();
             }
+
         });
+        vista.btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                buscarVentaPorId();
+            }
+        });
+
     }
 
     // ====================================================
@@ -100,6 +108,47 @@ public class ControladorVentas {
             JOptionPane.showMessageDialog(vista, "⚠️ El total debe ser un número válido.");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vista, "❌ Error inesperado: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    private void buscarVentaPorId() {
+        try {
+            String idTexto = vista.txtIdVenta.getText().trim();
+
+            if (idTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(vista, "⚠️ Ingresa el ID de la venta a buscar.");
+                return;
+            }
+
+            long idVenta = Long.parseLong(idTexto);
+
+            ModeloVenta venta = dao.obtenerVentaPorId(idVenta);
+
+            if (venta != null) {
+                // Llenar los campos de la vista con los datos
+                vista.txtNIT.setText(venta.getNit());
+                vista.txtDocumento.setText(venta.getDocumento());
+                vista.txtTotal.setText(String.valueOf(venta.getTotal()));
+                vista.txtObservaciones.setText(venta.getObservacion());
+                vista.cmbMetodoPago.setSelectedItem(venta.getTipoPago());
+
+                // Mostrar fecha (si existe)
+                if (venta.getFecha() != null) {
+                    vista.txtFecha.setText(venta.getFecha().toString());
+                } else {
+                    vista.txtFecha.setText("");
+                }
+
+                JOptionPane.showMessageDialog(vista, "✅ Venta encontrada y cargada correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(vista, "❌ No se encontró una venta con ese ID.");
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(vista, "⚠️ El ID debe ser un número válido.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(vista, "❌ Error al buscar la venta: " + ex.getMessage());
             ex.printStackTrace();
         }
     }

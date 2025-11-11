@@ -101,6 +101,11 @@ public class VistaReportes extends javax.swing.JFrame {
         btnCompras.setForeground(new java.awt.Color(255, 255, 255));
         btnCompras.setText("Compras");
         btnCompras.setToolTipText("");
+        btnCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprasActionPerformed(evt);
+            }
+        });
 
         btnVentas.setBackground(new java.awt.Color(75, 128, 146));
         btnVentas.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
@@ -185,6 +190,10 @@ public class VistaReportes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnComprasActionPerformed
 
     /**
      * @param args the command line arguments

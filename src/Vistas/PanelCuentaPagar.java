@@ -297,29 +297,41 @@ private CuentaPorPagarImpl dao;
         });
         add(txtSaldoPendiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 370, 130, -1));
 
+        btneliminar.setBackground(new java.awt.Color(75, 128, 146));
+        btneliminar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btneliminar.setForeground(new java.awt.Color(255, 255, 255));
         btneliminar.setText("Eliminar");
+        btneliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btneliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btneliminarActionPerformed(evt);
             }
         });
-        add(btneliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 490, -1, -1));
+        add(btneliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 480, 110, 30));
 
+        btnagregar.setBackground(new java.awt.Color(75, 128, 146));
+        btnagregar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnagregar.setForeground(new java.awt.Color(255, 255, 255));
         btnagregar.setText("Agregar");
+        btnagregar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnagregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnagregarActionPerformed(evt);
             }
         });
-        add(btnagregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 490, -1, -1));
+        add(btnagregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 480, 110, 30));
 
+        btnactualizar.setBackground(new java.awt.Color(75, 128, 146));
+        btnactualizar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnactualizar.setForeground(new java.awt.Color(255, 255, 255));
         btnactualizar.setText("Actualizar");
+        btnactualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnactualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnactualizarActionPerformed(evt);
             }
         });
-        add(btnactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 490, -1, -1));
+        add(btnactualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 480, 110, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked

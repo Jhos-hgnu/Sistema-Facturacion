@@ -10,6 +10,7 @@ package Utilities;
  */
 import Modelo.ModeloClientesVentas;
 import Modelo.ModeloDetalleVenta;
+import Modelo.ModeloReporteMensual;
 import Modelo.ModeloReporteVentaDia;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -46,11 +47,11 @@ public class GeneradorReporteVentas {
             writer.append("CANTIDAD DE VENTAS:,").append(String.valueOf(ventas.size())).append("\n");
             writer.append("FECHA:,").append(java.time.LocalDate.now().toString()).append("\n");
             
-            System.out.println("✅ CSV generado: " + filePath);
+            System.out.println("CSV generado: " + filePath);
             return true;
             
         } catch (IOException e) {
-            System.err.println("❌ Error al generar CSV: " + e.getMessage());
+            System.err.println("Error al generar CSV: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -79,4 +80,94 @@ public class GeneradorReporteVentas {
         }
         return carpetaComprobantes;
     }
+    
+    
+    
+    
+    
+    
+    
+     public boolean generarReporteMensualCSV(List<ModeloReporteMensual> datosMensuales, String filePath) {
+        // Crear directorio
+        java.io.File archivo = new java.io.File(filePath);
+        java.io.File directorio = archivo.getParentFile();
+        if (directorio != null && !directorio.exists()) {
+            directorio.mkdirs();
+        }
+        
+        try (FileWriter writer = new FileWriter(archivo)) {
+            // Encabezado del reporte
+            writer.append("REPORTE COMPARATIVO - ÚLTIMOS 6 MESES\n");
+            writer.append("Sistema de Farmacia\n");
+            writer.append("Fecha de generación:,").append(new java.util.Date().toString()).append("\n");
+            writer.append("Período analizado:,").append("Últimos " + datosMensuales.size() + " meses\n\n");
+            
+            // Encabezado de la tabla
+            writer.append("MES,VENTAS DEL MES,VENTAS MES ANTERIOR,DIFERENCIA Q,DIFERENCIA %,TENDENCIA\n");
+            
+            // Datos
+            double totalVentasActual = 0;
+            double totalVentasAnterior = 0;
+            int mesesConCrecimiento = 0;
+            
+            for (ModeloReporteMensual mes : datosMensuales) {
+                writer.append(escapeCSV(mes.getMes())).append(",");
+                writer.append(String.format("Q%.2f", mes.getVentasMes())).append(",");
+                writer.append(String.format("Q%.2f", mes.getVentasMesAnterior())).append(",");
+                writer.append(String.format("Q%.2f", mes.getDiferenciaMonto())).append(",");
+                writer.append(String.format("%.2f%%", mes.getDiferenciaPorcentaje())).append(",");
+                writer.append(mes.getTendencia()).append("\n");
+                
+                totalVentasActual += mes.getVentasMes();
+                totalVentasAnterior += mes.getVentasMesAnterior();
+                
+                if (mes.getDiferenciaMonto() > 0) {
+                    mesesConCrecimiento++;
+                }
+            }
+            
+            // Resumen ejecutivo
+            writer.append("\n");
+            writer.append("RESUMEN EJECUTIVO\n");
+            writer.append("Total ventas período actual:,").append(String.format("Q%.2f", totalVentasActual)).append("\n");
+            writer.append("Total ventas período anterior:,").append(String.format("Q%.2f", totalVentasAnterior)).append("\n");
+            
+            double crecimientoTotal = totalVentasActual - totalVentasAnterior;
+            double crecimientoPorcentaje = (totalVentasAnterior != 0) ? 
+                (crecimientoTotal / totalVentasAnterior) * 100 : 0;
+                
+            writer.append("Crecimiento total:,").append(String.format("Q%.2f", crecimientoTotal)).append("\n");
+            writer.append("Crecimiento porcentual:,").append(String.format("%.2f%%", crecimientoPorcentaje)).append("\n");
+            writer.append("Meses con crecimiento:,").append(mesesConCrecimiento + " de " + datosMensuales.size()).append("\n");
+            
+            // Análisis de tendencia
+            writer.append("\n");
+            writer.append("ANÁLISIS DE TENDENCIA\n");
+            if (crecimientoPorcentaje > 0) {
+                writer.append("Tendencia general:,").append("POSITIVA ▲\n");
+            } else if (crecimientoPorcentaje < 0) {
+                writer.append("Tendencia general:,").append("NEGATIVA ▼\n");
+            } else {
+                writer.append("Tendencia general:,").append("ESTABLE -\n");
+            }
+            
+            System.out.println("✅ Reporte últimos 6 meses CSV generado: " + archivo.getAbsolutePath());
+            return true;
+            
+        } catch (IOException e) {
+            System.err.println("❌ Error al generar reporte mensual CSV: " + e.getMessage());
+            return false;
+        }
+    }
+    
+//    private String escapeCSV(String value) {
+//        if (value == null) return "";
+//        if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
+//            value = value.replace("\"", "\"\"");
+//            value = "\"" + value + "\"";
+//        }
+//        return value;
+//    }
+    
+
 }
