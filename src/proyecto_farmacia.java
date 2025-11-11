@@ -16,7 +16,7 @@ public class proyecto_farmacia {
        /* VistaInicio vistainicio = new VistaInicio();
         vistainicio.setVisible(true);
         */
-   JFrame frame = new JFrame("Auditoría");
+  /* JFrame frame = new JFrame("Auditoría");
 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.setSize(900, 700);
 frame.setLocationRelativeTo(null);
@@ -24,7 +24,7 @@ PanelReporteCompras panel = new PanelReporteCompras();
    
 frame.setContentPane(panel);
 frame.setVisible(true);
-
+*/
     }
    
     
