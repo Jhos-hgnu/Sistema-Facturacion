@@ -16,7 +16,6 @@ import java.util.logging.Logger;
  *
  * @author luisd
  */
-
 public class DetalleVentasDAO {
 
     private final DBConnection conexion = new DBConnection();
@@ -158,6 +157,46 @@ public class DetalleVentasDAO {
         return lista;
     }
 
+    // === 🔍 NUEVO MÉTODO: LISTAR DETALLES POR ID_VENTA ===
+    // === 🔍 NUEVO MÉTODO: LISTAR DETALLES POR ID_VENTA ===
+    public List<ModeloDetalleVenta> listarPorIdVenta(long idVenta) {
+        List<ModeloDetalleVenta> lista = new ArrayList<>();
+        String sql = """
+        SELECT dv.*, p.NOMBRE_PRODUCTO AS nombre_producto
+        FROM DETALLE_VENTA dv
+        INNER JOIN PRODUCTOS p ON dv.ID_PRODUCTO = p.ID_PRODUCTO
+        WHERE dv.ID_VENTA = ?
+        ORDER BY dv.ID_DETALLE_VENTA ASC
+    """;
+
+        conexion.conectar();
+        try {
+            ps = conexion.preparar(sql);
+            ps.setLong(1, idVenta);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ModeloDetalleVenta detalle = mapearResultado(rs);
+
+                try {
+                    detalle.setNombreProducto(rs.getString("nombre_producto"));
+                } catch (SQLException ex) {
+                    // Ignorar si el campo no existe en el modelo
+                }
+
+                lista.add(detalle);
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(DetalleVentasDAO.class.getName())
+                    .log(Level.SEVERE, "Error al listar detalles por id_venta", e);
+        } finally {
+            cerrarRecursos();
+        }
+
+        return lista;
+    }
+
     // === MAPEO (ResultSet → Modelo) ===
     private ModeloDetalleVenta mapearResultado(ResultSet rs) throws SQLException {
         ModeloDetalleVenta detalle = new ModeloDetalleVenta();
@@ -173,8 +212,12 @@ public class DetalleVentasDAO {
     // === CERRAR CONEXIONES ===
     private void cerrarRecursos() {
         try {
-            if (rs != null && !rs.isClosed()) rs.close();
-            if (ps != null && !ps.isClosed()) ps.close();
+            if (rs != null && !rs.isClosed()) {
+                rs.close();
+            }
+            if (ps != null && !ps.isClosed()) {
+                ps.close();
+            }
             conexion.desconectar();
         } catch (SQLException e) {
             Logger.getLogger(DetalleVentasDAO.class.getName()).log(Level.WARNING, "Error al cerrar recursos", e);

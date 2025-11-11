@@ -5,6 +5,7 @@
 package Modelo;
 
 import java.util.Date;
+
 /**
  *
  * @author jhosu
@@ -18,19 +19,28 @@ public class ModeloDetalleVenta {
     private int cantidad;          // cantidad
     private double precioVenta;    // precio_venta
     private double descuento;      // descuento
+    private String nombreProducto;
 
     // === Constructores ===
     public ModeloDetalleVenta() {
     }
 
     public ModeloDetalleVenta(long idDetalleVenta, long idVenta, long idProducto, int cantidad,
-                              double precioVenta, double descuento) {
+            double precioVenta, double descuento) {
         this.idDetalleVenta = idDetalleVenta;
         this.idVenta = idVenta;
         this.idProducto = idProducto;
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
         this.descuento = descuento;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
     }
 
     // === Getters y Setters ===
@@ -91,13 +101,13 @@ public class ModeloDetalleVenta {
 
     @Override
     public String toString() {
-        return "DetalleVenta{" +
-                "ID Detalle=" + idDetalleVenta +
-                ", ID Venta=" + idVenta +
-                ", ID Producto=" + idProducto +
-                ", Cantidad=" + cantidad +
-                ", Precio Venta=" + precioVenta +
-                ", Descuento=" + descuento +
-                '}';
+        return "DetalleVenta{"
+                + "ID Detalle=" + idDetalleVenta
+                + ", ID Venta=" + idVenta
+                + ", ID Producto=" + idProducto
+                + ", Cantidad=" + cantidad
+                + ", Precio Venta=" + precioVenta
+                + ", Descuento=" + descuento
+                + '}';
     }
 }

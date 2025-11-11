@@ -40,11 +40,12 @@ public class ControladorVentas {
 
     private final PanelVentas vista;
     private final VentasDAO dao = new VentasDAO();
+    private final DetalleVentasDAO daoDetalle = new DetalleVentasDAO();
 
     public ControladorVentas(PanelVentas vista) {
         this.vista = vista;
 
-        // Asignar eventos a los botones del panel
+        // Botón guardar venta
         vista.btnHacerVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -52,20 +53,21 @@ public class ControladorVentas {
             }
         });
 
+        // Botón limpiar
         vista.btnEliminarVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 limpiarCampos();
             }
-
         });
+
+        // Botón buscar venta
         vista.btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 buscarVentaPorId();
             }
         });
-
     }
 
     // ====================================================
@@ -112,6 +114,9 @@ public class ControladorVentas {
         }
     }
 
+    // ====================================================
+    // BUSCAR VENTA + DETALLES
+    // ====================================================
     private void buscarVentaPorId() {
         try {
             String idTexto = vista.txtIdVenta.getText().trim();
@@ -140,9 +145,13 @@ public class ControladorVentas {
                     vista.txtFecha.setText("");
                 }
 
+                // === Cargar los detalles asociados en la tabla ===
+                cargarDetallesEnTabla(idVenta);
+
                 JOptionPane.showMessageDialog(vista, "✅ Venta encontrada y cargada correctamente.");
             } else {
                 JOptionPane.showMessageDialog(vista, "❌ No se encontró una venta con ese ID.");
+                limpiarTablaDetalles();
             }
 
         } catch (NumberFormatException ex) {
@@ -154,6 +163,32 @@ public class ControladorVentas {
     }
 
     // ====================================================
+    // CARGAR DETALLES EN TABLA
+    // ====================================================
+    private void cargarDetallesEnTabla(long idVenta) {
+        DefaultTableModel modelo = (DefaultTableModel) vista.getTblDetalle().getModel();
+        modelo.setRowCount(0); // limpiar tabla
+
+        List<ModeloDetalleVenta> listaDetalles = daoDetalle.listarPorIdVenta(idVenta);
+
+        for (ModeloDetalleVenta detalle : listaDetalles) {
+            Object[] fila = {
+                detalle.getIdDetalleVenta(),
+                detalle.getNombreProducto(), // ✅ muestra nombre del producto
+                detalle.getCantidad(),
+                detalle.getPrecioVenta(),
+                detalle.getDescuento()
+            };
+            modelo.addRow(fila);
+        }
+    }
+
+    private void limpiarTablaDetalles() {
+        DefaultTableModel modelo = (DefaultTableModel) vista.getTblDetalle().getModel();
+        modelo.setRowCount(0);
+    }
+
+    // ====================================================
     // LIMPIAR CAMPOS
     // ====================================================
     private void limpiarCampos() {
@@ -162,5 +197,7 @@ public class ControladorVentas {
         vista.txtObservaciones.setText("");
         vista.txtTotal.setText("");
         vista.cmbMetodoPago.setSelectedIndex(0);
+        vista.txtFecha.setText("");
+        limpiarTablaDetalles();
     }
 }
