@@ -6,8 +6,10 @@ package Implementacion;
 
 import Conector.DBConnection;
 import Conector.SQL;
+import Modelo.ModeloMejorCliente;
 import Modelo.ModeloReporteMensual;
 import Modelo.ModeloReporteVentaDia;
+import Modelo.TipoRankingCliente;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -294,6 +296,128 @@ public class ReporteVentaDAO {
         } catch (Exception e) {
             return mes; // Si falla, devolver el original
         }
+    }
+
+    
+     public List<ModeloMejorCliente> obtenerMejoresClientes(TipoRankingCliente tipoRanking, int top, 
+                                                          String fechaInicio, String fechaFin) {
+        List<ModeloMejorCliente> clientes = new ArrayList<>();
+        
+        try {
+            dbConnection.conectar();
+            Connection conn = dbConnection.getConnection();
+            
+            // Calcular total general para porcentajes
+            double totalGeneral = calcularTotalVentasPeriodo(fechaInicio, fechaFin);
+            
+            String sql = construirQueryMejoresClientes(tipoRanking);
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, fechaInicio);
+            pstmt.setString(2, fechaFin);
+            pstmt.setInt(3, top);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            int ranking = 1;
+            while (rs.next()) {
+                double montoCliente = rs.getDouble("monto_total");
+                double porcentaje = (totalGeneral > 0) ? (montoCliente / totalGeneral) * 100 : 0;
+                
+                ModeloMejorCliente cliente = new ModeloMejorCliente(
+                    rs.getString("nit"),
+                    rs.getString("nombre_cliente"),
+                    montoCliente,
+                    rs.getInt("cantidad_facturas"),
+                    porcentaje,
+                    ranking++
+                );
+                clientes.add(cliente);
+            }
+            
+            rs.close();
+            pstmt.close();
+            
+        } catch (SQLException e) {
+            System.err.println("❌ Error en obtenerMejoresClientes: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            dbConnection.desconectar();
+        }
+        
+        return clientes;
+    }
+    
+    /**
+     * Construye la query según el tipo de ranking
+     */
+    private String construirQueryMejoresClientes(TipoRankingCliente tipoRanking) {
+        String orderBy = "";
+        
+        switch (tipoRanking) {
+            case POR_MONTO:
+                orderBy = "monto_total DESC";
+                break;
+            case POR_FRECUENCIA:
+                orderBy = "cantidad_facturas DESC, monto_total DESC";
+                break;
+            default:
+                orderBy = "monto_total DESC";
+        }
+        
+        return "SELECT * FROM ( " +
+               "    SELECT " +
+               "        c.nit, " +
+               "        c.primer_nombre || ' ' || c.primer_apellido as nombre_cliente, " +
+               "        SUM(v.total) as monto_total, " +
+               "        COUNT(v.id_venta) as cantidad_facturas " +
+               "    FROM clientes c " +
+               "    JOIN venta v ON c.nit = v.nit " +
+               "    WHERE v.fecha BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 1 " +
+               "    GROUP BY c.nit, c.primer_nombre, c.primer_apellido " +
+               "    ORDER BY " + orderBy +
+               ") WHERE ROWNUM <= ?";
+    }
+    
+    /**
+     * Calcula el total de ventas en el período para los porcentajes
+     */
+    private double calcularTotalVentasPeriodo(String fechaInicio, String fechaFin) {
+        double total = 0;
+        
+        try {
+            Connection conn = dbConnection.getConnection();
+            String sql = "SELECT NVL(SUM(total), 0) as total_periodo " +
+                         "FROM venta " +
+                         "WHERE fecha BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 1";
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, fechaInicio);
+            pstmt.setString(2, fechaFin);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                total = rs.getDouble("total_periodo");
+            }
+            
+            rs.close();
+            pstmt.close();
+            
+        } catch (SQLException e) {
+            System.err.println("❌ Error calculando total período: " + e.getMessage());
+        }
+        
+        return total;
+    }
+    
+    /**
+     * Método simplificado para últimos 30 días
+     */
+    public List<ModeloMejorCliente> obtenerMejoresClientesUltimos30Dias(TipoRankingCliente tipoRanking, int top) {
+        String fechaFin = java.time.LocalDate.now().toString();
+        String fechaInicio = java.time.LocalDate.now().minusDays(30).toString();
+        
+        return obtenerMejoresClientes(tipoRanking, top, fechaInicio, fechaFin);
     }
 
     

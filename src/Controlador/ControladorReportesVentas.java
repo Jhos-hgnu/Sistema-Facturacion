@@ -1,8 +1,10 @@
 package Controlador;
 
 import Implementacion.ReporteVentaDAO;
+import Modelo.ModeloMejorCliente;
 import Modelo.ModeloReporteMensual;
 import Modelo.ModeloReporteVentaDia;
+import Modelo.TipoRankingCliente;
 import Utilities.GeneradorReporteVentas;
 import Vistas.PanelReportesVentas;
 import java.io.IOException;
@@ -213,6 +215,80 @@ public class ControladorReportesVentas {
         } catch (IOException e) {
             // Ignorar error de apertura
         }
+    }
+    
+    
+    
+    public void generarReporteMejoresClientes(TipoRankingCliente tipoRanking, int top, 
+                                                String fechaInicio, String fechaFin){
+     
+        
+        SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                try {
+                    System.out.println("🔄 Generando reporte mejores clientes: " + tipoRanking.getDescripcion());
+                    
+                    // Obtener datos
+                    List<ModeloMejorCliente> mejoresClientes = reporteDao.obtenerMejoresClientes(
+                        tipoRanking, top, fechaInicio, fechaFin);
+                    
+                    if (mejoresClientes.isEmpty()) {
+                        JOptionPane.showMessageDialog(null,
+                            "No se encontraron clientes para el período especificado",
+                            "Sin datos",
+                            JOptionPane.INFORMATION_MESSAGE);
+                        return false;
+                    }
+                    
+                    // Generar CSV
+                    String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+                    String userHome = System.getProperty("user.home");
+                    String periodo = fechaInicio + " a " + fechaFin;
+                    String filePath = userHome + "/Desktop/Reportes Farmacia/mejores_clientes_" + 
+                                    tipoRanking.name().toLowerCase() + "_" + timestamp + ".csv";
+                    
+                    return csvGenerator.generarReporteMejoresClientesCSV(
+                        mejoresClientes, tipoRanking, periodo, filePath);
+                    
+                } catch (Exception e) {
+                    System.err.println("❌ Error generando reporte mejores clientes: " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+            
+            @Override
+            protected void done() {
+                try {
+                    boolean exito = get();
+                    
+                    if (exito) {
+                        JOptionPane.showMessageDialog(null,
+                            "✅ Reporte de mejores clientes generado exitosamente\n" +
+                            "📁 Guardado en: Escritorio/Reportes Farmacia",
+                            "Éxito",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                            "Error al generar el reporte de mejores clientes",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null,
+                        "Error: " + e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        };
+        
+        worker.execute();
+        
+        
+        
     }
 
 }

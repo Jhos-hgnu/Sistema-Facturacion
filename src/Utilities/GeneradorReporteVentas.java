@@ -10,8 +10,10 @@ package Utilities;
  */
 import Modelo.ModeloClientesVentas;
 import Modelo.ModeloDetalleVenta;
+import Modelo.ModeloMejorCliente;
 import Modelo.ModeloReporteMensual;
 import Modelo.ModeloReporteVentaDia;
+import Modelo.TipoRankingCliente;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import java.io.File;
@@ -169,5 +171,72 @@ public class GeneradorReporteVentas {
 //        return value;
 //    }
     
+
+     
+     public boolean generarReporteMejoresClientesCSV(List<ModeloMejorCliente> clientes, 
+                                                   TipoRankingCliente tipoRanking, 
+                                                   String periodo, String filePath) {
+        // Crear directorio
+        java.io.File archivo = new java.io.File(filePath);
+        java.io.File directorio = archivo.getParentFile();
+        if (directorio != null && !directorio.exists()) {
+            directorio.mkdirs();
+        }
+        
+        try (FileWriter writer = new FileWriter(archivo)) {
+            // Encabezado del reporte
+            writer.append("REPORTE DE MEJORES CLIENTES\n");
+            writer.append("Criterio:,").append(tipoRanking.getDescripcion()).append("\n");
+            writer.append("Período:,").append(periodo).append("\n");
+            writer.append("Fecha de generación:,").append(new java.util.Date().toString()).append("\n\n");
+            
+            // Encabezado de la tabla
+            writer.append("RANKING,NIT,CLIENTE,MONTO TOTAL,CANTIDAD FACTURAS,TICKET PROMEDIO,% DEL TOTAL\n");
+            
+            // Datos
+            double totalMonto = 0;
+            int totalFacturas = 0;
+            
+            for (ModeloMejorCliente cliente : clientes) {
+                writer.append(String.valueOf(cliente.getRanking())).append(",");
+                writer.append(escapeCSV(cliente.getNit())).append(",");
+                writer.append(escapeCSV(cliente.getNombreCliente())).append(",");
+                writer.append(cliente.getMontoTotalFormateado()).append(",");
+                writer.append(String.valueOf(cliente.getCantidadFacturas())).append(",");
+                writer.append(cliente.getTicketPromedioFormateado()).append(",");
+                writer.append(cliente.getPorcentajeFormateado()).append("\n");
+                
+                totalMonto += cliente.getMontoTotal();
+                totalFacturas += cliente.getCantidadFacturas();
+            }
+            
+            // Resumen
+            writer.append("\n");
+            writer.append("RESUMEN DEL REPORTE\n");
+            writer.append("Total clientes en el reporte:,").append(String.valueOf(clientes.size())).append("\n");
+            writer.append("Monto total de clientes reportados:,").append(String.format("Q%.2f", totalMonto)).append("\n");
+            writer.append("Facturas totales de clientes reportados:,").append(String.valueOf(totalFacturas)).append("\n");
+            writer.append("Ticket promedio general:,").append(String.format("Q%.2f", totalFacturas > 0 ? totalMonto / totalFacturas : 0)).append("\n");
+            
+            // Análisis adicional según el tipo de ranking
+            writer.append("\n");
+            writer.append("ANÁLISIS POR CRITERIO: ").append(tipoRanking.getDescripcion()).append("\n");
+            
+            if (tipoRanking == TipoRankingCliente.POR_MONTO) {
+                writer.append("Cliente con mayor monto:,").append(escapeCSV(clientes.get(0).getNombreCliente())).append("\n");
+                writer.append("Monto del top cliente:,").append(clientes.get(0).getMontoTotalFormateado()).append("\n");
+            } else {
+                writer.append("Cliente más frecuente:,").append(escapeCSV(clientes.get(0).getNombreCliente())).append("\n");
+                writer.append("Facturas del top cliente:,").append(String.valueOf(clientes.get(0).getCantidadFacturas())).append("\n");
+            }
+            
+            System.out.println("✅ Reporte mejores clientes CSV generado: " + archivo.getAbsolutePath());
+            return true;
+            
+        } catch (IOException e) {
+            System.err.println("❌ Error al generar reporte mejores clientes CSV: " + e.getMessage());
+            return false;
+        }
+    }
 
 }

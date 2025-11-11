@@ -5,6 +5,11 @@
 package Vistas;
 
 import Controlador.ControladorReportesVentas;
+import Modelo.TipoRankingCliente;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 
 /**
@@ -13,29 +18,71 @@ import javax.swing.JSpinner;
  */
 public class PanelReportesVentas extends javax.swing.JPanel {
 
+    ControladorReportesVentas controlador = new ControladorReportesVentas();
+
     /**
      * Creates new form PanelReportesVentas
      */
     public PanelReportesVentas() {
         initComponents();
-         ControladorReportesVentas controlador = new ControladorReportesVentas();
-      btnVentasRango.addActionListener(e -> {
-          controlador.generarReporteVentasDiaCSV();
-      });
-      
-      btnVentasMensuales.addActionListener(e -> {
-          controlador.generarReporteVentasMensuales();   
-      });
-        
-      
-      btnMejoresClientes.addActionListener(e -> {
-      
-        controlador.generarReporteVentasMensuales();
-      
-      });
-        
-        
+
+        btnGroupFiltroCliente.add(radBtnCosto);
+        btnGroupFiltroCliente.add(radBtnMonto);
+
+        btnVentasRango.addActionListener(e -> {
+            controlador.generarReporteVentasDiaCSV();
+        });
+
+        btnVentasMensuales.addActionListener(e -> {
+            controlador.generarReporteVentasMensuales();
+        });
+
+        btnMejoresClientes.addActionListener(e -> {
+
+            datosVaciosMCLientes();
+
+        });
+
         //925 700
+    }
+
+    public void datosVaciosMCLientes() {
+        int valor = (int) spinnerTopCliente.getValue();
+        LocalDate fechaInicial = dateFechaFinalMC.getDate();
+        LocalDate fechaFinal = dateFechaFinalMC.getDate();
+
+        if (valor < 1) {
+            JOptionPane.showMessageDialog(null,
+                    "Debe seleccionar al menos un número igual o mayor a 1",
+                    "Valor inválido",
+                    JOptionPane.WARNING_MESSAGE);
+        } else if (fechaFinal == null | fechaInicial == null | !(radBtnMonto.isSelected() | radBtnCosto.isSelected())) {
+            JOptionPane.showMessageDialog(null,
+                    "Debe seleccionar todos los datos",
+                    "Acción inválida",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            extraerDatos();
+        }
+
+    }
+
+    public void extraerDatos() {
+        LocalDate fechaInicial = dateFechaFinalMC.getDate();
+        LocalDate fechaFinal = dateFechaFinalMC.getDate();
+
+        DateTimeFormatter formatterOracle = DateTimeFormatter.ofPattern("dd-MMM-yy", Locale.ENGLISH);
+
+        String fechaInicialOracle = fechaInicial.format(formatterOracle);
+        String fechaFinalOracle = fechaFinal.format(formatterOracle);
+        int valor = (int) spinnerTopCliente.getValue();
+
+        if (radBtnMonto.isSelected()) {
+            controlador.generarReporteMejoresClientes(TipoRankingCliente.POR_MONTO, valor, fechaInicialOracle, fechaFinalOracle);
+        } else {
+            controlador.generarReporteMejoresClientes(TipoRankingCliente.POR_FRECUENCIA, valor, fechaInicialOracle, fechaFinalOracle);
+        }
+
     }
 
     /**
@@ -47,6 +94,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGroupFiltroCliente = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -55,25 +103,29 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         btnVentasRango = new javax.swing.JButton();
-        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
-        datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
+        dateFechaInicio = new com.github.lgooddatepicker.components.DatePicker();
+        dateFechaFinal = new com.github.lgooddatepicker.components.DatePicker();
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         btnVentasMensuales = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         btnMejoresClientes = new javax.swing.JButton();
-        jSpinner1 = new javax.swing.JSpinner();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        spinnerTopCliente = new javax.swing.JSpinner();
+        radBtnMonto = new javax.swing.JRadioButton();
+        radBtnCosto = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
+        dateFechaInicioMC = new com.github.lgooddatepicker.components.DatePicker();
+        dateFechaFinalMC = new com.github.lgooddatepicker.components.DatePicker();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         btnProductosVendidos = new javax.swing.JButton();
-        jSpinner2 = new javax.swing.JSpinner();
+        spinnerTopPMVendidos = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        radBtncantidad = new javax.swing.JRadioButton();
+        radBtnMontoVendidos = new javax.swing.JRadioButton();
         titulo1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -100,7 +152,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 130, 20));
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 290, 170));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 290, 170));
 
         jPanel2.setBackground(new java.awt.Color(75, 128, 146));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -129,10 +181,14 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         btnVentasRango.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnVentasRango.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.add(btnVentasRango, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 130, 30));
-        jPanel2.add(datePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 190, -1));
-        jPanel2.add(datePicker2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 190, -1));
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 440, 350, 190));
+        dateFechaInicio.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.add(dateFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 190, -1));
+
+        dateFechaFinal.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.add(dateFechaFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 190, -1));
+
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, 350, 190));
 
         jPanel3.setBackground(new java.awt.Color(75, 128, 146));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -150,7 +206,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         btnVentasMensuales.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.add(btnVentasMensuales, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 130, 30));
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 290, 160));
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 290, 160));
 
         jPanel4.setBackground(new java.awt.Color(75, 128, 146));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -159,26 +215,47 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         jLabel11.setText("Mejores Clientes");
         jLabel11.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 130, 20));
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 0, 130, 20));
 
         btnMejoresClientes.setText("Generar Reporte");
         btnMejoresClientes.setBackground(new java.awt.Color(28, 95, 118));
         btnMejoresClientes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnMejoresClientes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnMejoresClientes.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(btnMejoresClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 130, 30));
-        jPanel4.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
+        jPanel4.add(btnMejoresClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 120, 30));
+        jPanel4.add(spinnerTopCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
-        jRadioButton1.setText("Por monto ");
-        jPanel4.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
+        radBtnMonto.setBackground(new java.awt.Color(75, 128, 146));
+        radBtnMonto.setForeground(new java.awt.Color(51, 51, 51));
+        radBtnMonto.setText("Por monto ");
+        jPanel4.add(radBtnMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
 
-        jRadioButton2.setText("Por Costo");
-        jPanel4.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+        radBtnCosto.setBackground(new java.awt.Color(75, 128, 146));
+        radBtnCosto.setForeground(new java.awt.Color(51, 51, 51));
+        radBtnCosto.setText("Por Costo");
+        jPanel4.add(radBtnCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Top:");
         jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
-        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 290, 170));
+        dateFechaInicioMC.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.add(dateFechaInicioMC, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 190, -1));
+
+        dateFechaFinalMC.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.add(dateFechaFinalMC, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 190, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Fecha Fin");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Fecha Inicio");
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+
+        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 420, 180));
 
         jPanel5.setBackground(new java.awt.Color(75, 128, 146));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -194,19 +271,24 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         btnProductosVendidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnProductosVendidos.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnProductosVendidos.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel5.add(btnProductosVendidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 130, 30));
-        jPanel5.add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
+        jPanel5.add(btnProductosVendidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 110, 30));
+        jPanel5.add(spinnerTopPMVendidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Top:");
         jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
-        jRadioButton3.setText("Por cantidad");
-        jPanel5.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
+        radBtncantidad.setBackground(new java.awt.Color(75, 128, 146));
+        radBtncantidad.setForeground(new java.awt.Color(51, 51, 51));
+        radBtncantidad.setText("Por cantidad");
+        jPanel5.add(radBtncantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
 
-        jRadioButton4.setText("Por Monto");
-        jPanel5.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+        radBtnMontoVendidos.setBackground(new java.awt.Color(75, 128, 146));
+        radBtnMontoVendidos.setForeground(new java.awt.Color(51, 51, 51));
+        radBtnMontoVendidos.setText("Por Monto");
+        jPanel5.add(radBtnMontoVendidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
 
-        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 240, 290, 160));
+        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 420, 160));
 
         titulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titulo1.setText("GENERAR REPORTES");
@@ -236,15 +318,15 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         marcaAgua.setText("FARMACIA");
         marcaAgua.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         marcaAgua.setForeground(new java.awt.Color(255, 255, 255));
-        add(marcaAgua, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 850, -1));
+        add(marcaAgua, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 850, -1));
 
         separador2.setBackground(new java.awt.Color(255, 255, 255));
         separador2.setForeground(new java.awt.Color(255, 255, 255));
-        add(separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 650, 850, 10));
+        add(separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 660, 850, 10));
 
         separador.setBackground(new java.awt.Color(255, 255, 255));
         separador.setForeground(new java.awt.Color(255, 255, 255));
-        add(separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 850, 10));
+        add(separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 850, 10));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
@@ -253,13 +335,16 @@ public class PanelReportesVentas extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup btnGroupFiltroCliente;
     private javax.swing.JButton btnMejoresClientes;
     private javax.swing.JButton btnProductosVendidos;
     private javax.swing.JPanel btnSalir;
     private javax.swing.JButton btnVentasMensuales;
     private javax.swing.JButton btnVentasRango;
-    private com.github.lgooddatepicker.components.DatePicker datePicker1;
-    private com.github.lgooddatepicker.components.DatePicker datePicker2;
+    private com.github.lgooddatepicker.components.DatePicker dateFechaFinal;
+    private com.github.lgooddatepicker.components.DatePicker dateFechaFinalMC;
+    private com.github.lgooddatepicker.components.DatePicker dateFechaInicio;
+    private com.github.lgooddatepicker.components.DatePicker dateFechaInicioMC;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -270,21 +355,23 @@ public class PanelReportesVentas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JLabel marcaAgua;
+    private javax.swing.JRadioButton radBtnCosto;
+    private javax.swing.JRadioButton radBtnMonto;
+    private javax.swing.JRadioButton radBtnMontoVendidos;
+    private javax.swing.JRadioButton radBtncantidad;
     private javax.swing.JSeparator separador;
     private javax.swing.JSeparator separador2;
+    private javax.swing.JSpinner spinnerTopCliente;
+    private javax.swing.JSpinner spinnerTopPMVendidos;
     private javax.swing.JLabel titulo1;
     // End of variables declaration//GEN-END:variables
 }
