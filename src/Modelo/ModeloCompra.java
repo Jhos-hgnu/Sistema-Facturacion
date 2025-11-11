@@ -1,36 +1,30 @@
 package Modelo;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author jciri
- */
-
 import java.util.Date;
 
-
+/**
+ * Representa una compra registrada en la base de datos FARMACIA.COMPRAS.
+ * Autor: Joshua Cirilo Alegría
+ */
 public class ModeloCompra {
-    
-    private int idCompra;
-    private int idProveedor;
-    private Date fecha;
-    private String documento;
-    private double totalBruto;
-    private String formaPago;
-    private String estado;
-    private int idUsuario;
-    private Date fechaCompra;
-    
-    //===== Constructor =======
+
+    private long idCompra;        // ID_COMPRA NUMBER(12,0)
+    private long idProveedor;     // ID_PROVEEDOR NUMBER(8,0)
+    private Date fecha;           // FECHA DATE
+    private String documento;     // DOCUMENTO CLOB (texto largo)
+    private double totalBruto;    // TOTAL_BRUTO NUMBER(18,4)
+    private String formaPago;     // FORMA_PAGO VARCHAR2(600)
+    private String estado;        // ESTADO VARCHAR2(800)
+    private long idUsuario;       // ID_USUARIO NUMBER(8,0)
+    private Date fechaCompra;     // FECHA_COMPRA DATE
+
+    // 🔹 Constructor vacío
     public ModeloCompra() {}
-    
-    
-    public ModeloCompra(int idCompra, int idProveedor, Date fecha, String documento, double totalBruto,
-                  String formaPago, String estado, int idUsuario, Date fechaCompra) {
+
+    // 🔹 Constructor con parámetros
+    public ModeloCompra(long idCompra, long idProveedor, Date fecha, String documento,
+                        double totalBruto, String formaPago, String estado,
+                        long idUsuario, Date fechaCompra) {
         this.idCompra = idCompra;
         this.idProveedor = idProveedor;
         this.fecha = fecha;
@@ -41,23 +35,24 @@ public class ModeloCompra {
         this.idUsuario = idUsuario;
         this.fechaCompra = fechaCompra;
     }
-    
-    
-    //=== Getters and setters
 
-    public int getIdCompra() {
+    // ======================
+    // Getters y Setters
+    // ======================
+
+    public long getIdCompra() {
         return idCompra;
     }
 
-    public void setIdCompra(int idCompra) {
+    public void setIdCompra(long idCompra) {
         this.idCompra = idCompra;
     }
 
-    public int getIdProveedor() {
+    public long getIdProveedor() {
         return idProveedor;
     }
 
-    public void setIdProveedor(int idProveedor) {
+    public void setIdProveedor(long idProveedor) {
         this.idProveedor = idProveedor;
     }
 
@@ -101,11 +96,11 @@ public class ModeloCompra {
         this.estado = estado;
     }
 
-    public int getIdUsuario() {
+    public long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -116,7 +111,19 @@ public class ModeloCompra {
     public void setFechaCompra(Date fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
-    
-    
-   
+
+    @Override
+    public String toString() {
+        return "ModeloCompra{" +
+                "idCompra=" + idCompra +
+                ", idProveedor=" + idProveedor +
+                ", fecha=" + fecha +
+                ", documento='" + documento + '\'' +
+                ", totalBruto=" + totalBruto +
+                ", formaPago='" + formaPago + '\'' +
+                ", estado='" + estado + '\'' +
+                ", idUsuario=" + idUsuario +
+                ", fechaCompra=" + fechaCompra +
+                '}';
+    }
 }
