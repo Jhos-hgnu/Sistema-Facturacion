@@ -19,9 +19,11 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
      */
     public PanelMovimientosInventario() {
         initComponents();
-        //ControladorReporteCompra controlador = new ControladorReporteCompra(this);
+        ControladorMovimientos controlador = new ControladorMovimientos(this);
+        
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,7 +39,7 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
         salir = new javax.swing.JLabel();
         btnlimpiar = new javax.swing.JPanel();
         CompraFecha = new javax.swing.JLabel();
-        btnProveedor = new javax.swing.JPanel();
+        btnBuscar = new javax.swing.JPanel();
         BtnBuscar = new javax.swing.JLabel();
         separador = new javax.swing.JSeparator();
         separador2 = new javax.swing.JSeparator();
@@ -49,7 +51,6 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
         btnexportar = new javax.swing.JPanel();
         registroVenta1 = new javax.swing.JLabel();
         labelBuscarP1 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         tblcompras = new javax.swing.JScrollPane();
         boxUsuario = new javax.swing.JComboBox<>();
         txttipo = new javax.swing.JTextField();
@@ -57,16 +58,9 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
         boxProducto = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         txtcodigobarras = new javax.swing.JTextField();
-        chkanulados = new javax.swing.JCheckBox();
         chkobsv = new javax.swing.JCheckBox();
         jLabel13 = new javax.swing.JLabel();
-        txtvencimiento = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        txtobservaciones = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        txtlote = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        txtubicacion = new javax.swing.JTextField();
+        lblEstado = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(850, 700));
 
@@ -88,11 +82,11 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
         });
         btnSalir.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        salir.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        salir.setForeground(new java.awt.Color(255, 255, 255));
         salir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         salir.setText("X");
         salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        salir.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        salir.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.add(salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 30, 30));
 
         fondoPanel.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 30, 30));
@@ -101,27 +95,27 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
         btnlimpiar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnlimpiar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        CompraFecha.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        CompraFecha.setForeground(new java.awt.Color(255, 255, 255));
         CompraFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         CompraFecha.setText("Limpiar");
         CompraFecha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        CompraFecha.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        CompraFecha.setForeground(new java.awt.Color(255, 255, 255));
         btnlimpiar.add(CompraFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 5, 200, 20));
 
         fondoPanel.add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 210, 30));
 
-        btnProveedor.setBackground(new java.awt.Color(75, 128, 146));
-        btnProveedor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnProveedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        btnBuscar.setBackground(new java.awt.Color(75, 128, 146));
+        btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnBuscar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        BtnBuscar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        BtnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         BtnBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         BtnBuscar.setText("Buscar");
         BtnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BtnBuscar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        BtnBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        btnProveedor.add(BtnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 30));
+        btnBuscar.add(BtnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 30));
 
-        fondoPanel.add(btnProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 210, 30));
+        fondoPanel.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 210, 30));
 
         separador.setBackground(new java.awt.Color(255, 255, 255));
         separador.setForeground(new java.awt.Color(255, 255, 255));
@@ -168,12 +162,6 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
         labelBuscarP1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         labelBuscarP1.setForeground(new java.awt.Color(255, 255, 255));
         fondoPanel.add(labelBuscarP1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, -1, 20));
-
-        jLabel11.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Vence:");
-        fondoPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, -1, 20));
         fondoPanel.add(tblcompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 690, 260));
 
         boxUsuario.setModel(new javax.swing.DefaultComboBoxModel<ModeloReporteCompras.ModeloItem>());
@@ -224,14 +212,6 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
         txtcodigobarras.setForeground(new java.awt.Color(255, 255, 255));
         fondoPanel.add(txtcodigobarras, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 70, 140, -1));
 
-        chkanulados.setText("Ver anulados");
-        chkanulados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkanuladosActionPerformed(evt);
-            }
-        });
-        fondoPanel.add(chkanulados, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, -1, -1));
-
         chkobsv.setText("Observaciones");
         fondoPanel.add(chkobsv, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, -1, -1));
 
@@ -240,53 +220,7 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel13.setText("Tipo");
         fondoPanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, -1, 20));
-
-        txtvencimiento.setBackground(new java.awt.Color(75, 128, 146));
-        txtvencimiento.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtvencimiento.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        txtvencimiento.setForeground(new java.awt.Color(255, 255, 255));
-        fondoPanel.add(txtvencimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 140, -1));
-
-        jLabel14.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel14.setText("Observacion");
-        fondoPanel.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 210, -1, 20));
-
-        txtobservaciones.setBackground(new java.awt.Color(75, 128, 146));
-        txtobservaciones.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtobservaciones.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        txtobservaciones.setForeground(new java.awt.Color(255, 255, 255));
-        txtobservaciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtobservacionesActionPerformed(evt);
-            }
-        });
-        fondoPanel.add(txtobservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 190, 240, 60));
-
-        jLabel15.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel15.setText("Lote:");
-        fondoPanel.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, -1, 20));
-
-        txtlote.setBackground(new java.awt.Color(75, 128, 146));
-        txtlote.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        txtlote.setForeground(new java.awt.Color(255, 255, 255));
-        txtlote.setCaretColor(new java.awt.Color(255, 255, 255));
-        fondoPanel.add(txtlote, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 140, -1));
-
-        jLabel16.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel16.setText("Ubicacion ");
-        fondoPanel.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 140, -1, 20));
-
-        txtubicacion.setBackground(new java.awt.Color(75, 128, 146));
-        txtubicacion.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtubicacion.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        txtubicacion.setForeground(new java.awt.Color(255, 255, 255));
-        fondoPanel.add(txtubicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 140, 140, -1));
+        fondoPanel.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 340, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -312,14 +246,6 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_boxProductoActionPerformed
 
-    private void chkanuladosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkanuladosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chkanuladosActionPerformed
-
-    private void txtobservacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtobservacionesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtobservacionesActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BtnBuscar;
@@ -328,23 +254,19 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
     public com.github.lgooddatepicker.components.DatePicker FechaHasta;
     public javax.swing.JComboBox<ModeloReporteCompras.ModeloItem> boxProducto;
     public javax.swing.JComboBox<ModeloReporteCompras.ModeloItem> boxUsuario;
-    public javax.swing.JPanel btnProveedor;
+    public javax.swing.JPanel btnBuscar;
     private javax.swing.JPanel btnSalir;
     public javax.swing.JPanel btnexportar;
     public javax.swing.JPanel btnlimpiar;
-    private javax.swing.JCheckBox chkanulados;
-    private javax.swing.JCheckBox chkobsv;
+    public javax.swing.JCheckBox chkobsv;
     private javax.swing.JPanel fondoPanel;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel labelBuscarP1;
+    public javax.swing.JLabel lblEstado;
     private javax.swing.JLabel marcaAgua;
     private javax.swing.JLabel registroVenta1;
     private javax.swing.JLabel salir;
@@ -353,15 +275,11 @@ public class PanelMovimientosInventario extends javax.swing.JPanel {
     public javax.swing.JScrollPane tblcompras;
     private javax.swing.JLabel titulo1;
     public javax.swing.JTextField txtcodigobarras;
-    public javax.swing.JTextField txtlote;
-    public javax.swing.JTextField txtobservaciones;
     public javax.swing.JTextField txttipo;
-    public javax.swing.JTextField txtubicacion;
-    public javax.swing.JTextField txtvencimiento;
     // End of variables declaration//GEN-END:variables
  public void setControlador(ControladorMovimientos controlador) {
-       /* btnlimpiar.addMouseListener(controlador);
-        btnProveedor.addMouseListener(controlador);
-        btnexportar.addMouseListener(controlador);*/
+       btnlimpiar.addMouseListener(controlador);
+        btnBuscar.addMouseListener(controlador);
+        btnexportar.addMouseListener(controlador);
     }
 }
