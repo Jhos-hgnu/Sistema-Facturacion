@@ -13,19 +13,17 @@ public class proyecto_farmacia {
    public static void main(String[] args) {
         // TODO code application logic here
 
-        VistaInicio vistainicio = new VistaInicio();
+       /* VistaInicio vistainicio = new VistaInicio();
         vistainicio.setVisible(true);
-        
-//         JFrame frame = new JFrame("Auditoría");
-//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//frame.setSize(900, 700);
-//frame.setLocationRelativeTo(null);
-//
-//PanelAuditoria panel = new PanelAuditoria();
-//new controladores.ControladorAuditoria(panel); // ← crea y conecta 1 sola vez
-//
-//frame.setContentPane(panel);
-//frame.setVisible(true);
+        */
+   JFrame frame = new JFrame("Auditoría");
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+frame.setSize(900, 700);
+frame.setLocationRelativeTo(null);
+PanelReporteCompras panel = new PanelReporteCompras();
+   
+frame.setContentPane(panel);
+frame.setVisible(true);
 
     }
    

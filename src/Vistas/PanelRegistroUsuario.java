@@ -227,6 +227,11 @@ public class PanelRegistroUsuario extends javax.swing.JPanel {
         boxTipoUsuario.setForeground(new java.awt.Color(255, 255, 255));
         boxTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VENDEDOR", "ADMINISTRADOR" }));
         boxTipoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        boxTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxTipoUsuarioActionPerformed(evt);
+            }
+        });
         fondoPanel.add(boxTipoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 220, 110, -1));
 
         btnRegistrar.setBackground(new java.awt.Color(75, 128, 146));
@@ -458,6 +463,10 @@ public class PanelRegistroUsuario extends javax.swing.JPanel {
     private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEstadoActionPerformed
+
+    private void boxTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipoUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxTipoUsuarioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

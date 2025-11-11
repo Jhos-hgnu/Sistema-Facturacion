@@ -132,7 +132,7 @@ public class ProductoImp implements IProducto {
                 }
             }
 
-            // 2) actualizar
+            
             ps = cn.prepareStatement(up);
             ps.setString(1, p.getNombreProducto());
             ps.setString(2, p.getMarca());
