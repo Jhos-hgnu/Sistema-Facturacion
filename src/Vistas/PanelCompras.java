@@ -332,6 +332,7 @@ public class PanelCompras extends javax.swing.JPanel {
         });
         add(btnActualizar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 530, -1, -1));
 
+        btnBuscar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
