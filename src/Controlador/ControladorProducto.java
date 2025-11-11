@@ -1,17 +1,17 @@
 package Controlador;
-import Conector.*;
+
 import Implementacion.CatalogosImpl;
-import javax.swing.*;
+
 import Implementacion.ProductoImp;
 import Modelo.ModeloProducto;
+import Modelo.ModeloVistaInicio;
 import Vistas.PanelProducto;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
- import Vistas.PanelReporteProductos;  
-import java.awt.Dialog;
+
 
 public class ControladorProducto implements MouseListener {
 
@@ -19,11 +19,17 @@ public class ControladorProducto implements MouseListener {
     private final ProductoImp dao;
     private final CatalogosImpl catalogos;
     private boolean enProceso = false; 
+    private long ultimoClick = 0;
 
     public ControladorProducto(PanelProducto vista) {
         this.vista = vista;
         this.dao = new ProductoImp();
         this.catalogos = new CatalogosImpl();
+    }
+
+   
+    private long getUsuarioIdActual() {
+        return (long) ModeloVistaInicio.getIdUsuarioEncontrado(); 
     }
 
     private BigDecimal validarCodigo() {
@@ -37,12 +43,10 @@ public class ControladorProducto implements MouseListener {
         return new BigDecimal(idText);
     }
 
-  
     private String validarCamposBasicos() {
         if (vista.txtNombreProducto.getText().trim().isEmpty())
             return "El nombre del producto es obligatorio.";
 
-      
         String costoTxt = vista.txtPrecioCosto.getText().trim();
         String ventaTxt = vista.txtPrecioVenta.getText().trim();
         if (!costoTxt.matches("\\d+(\\.\\d+)?")) return "Precio costo inválido.";
@@ -51,7 +55,7 @@ public class ControladorProducto implements MouseListener {
         BigDecimal venta = new BigDecimal(ventaTxt);
         if (costo.compareTo(BigDecimal.ZERO) < 0) return "Precio costo no puede ser negativo.";
         if (venta.compareTo(BigDecimal.ZERO) < 0) return "Precio venta no puede ser negativo.";
-       
+
         String stockTxt = vista.txtStock.getText().trim();
         if (!stockTxt.matches("\\d+")) return "Stock inválido.";
         int stock = Integer.parseInt(stockTxt);
@@ -60,7 +64,6 @@ public class ControladorProducto implements MouseListener {
         return null;
     }
 
-  
     private Integer obtenerIdCategoria(String valor) {
         if (valor == null || valor.trim().isEmpty()) return null;
         valor = valor.trim();
@@ -77,11 +80,9 @@ public class ControladorProducto implements MouseListener {
         }
     }
 
-   
     private Integer obtenerIdImpuesto(String valor) {
         if (valor == null || valor.trim().isEmpty()) return null;
         valor = valor.trim();
-
         if (valor.matches("\\d+")) return Integer.parseInt(valor);
 
         String tasaTxt = valor.replace("%", "").trim();
@@ -102,7 +103,6 @@ public class ControladorProducto implements MouseListener {
         return id;
     }
 
-   
     private ModeloProducto buildProducto(BigDecimal idProd) {
         ModeloProducto p = new ModeloProducto();
         p.setIdProducto(idProd);
@@ -122,7 +122,6 @@ public class ControladorProducto implements MouseListener {
         return p;
     }
 
-  
     private void limpiarFormulario() {
         vista.txtCodigoBarras.setText("");
         vista.txtNombreProducto.setText("");
@@ -136,66 +135,51 @@ public class ControladorProducto implements MouseListener {
         vista.txtCodigoBarrasP.setText("");
         vista.txtNombreProductoB.setText("");
 
-       
         vista.btnActualizar.setVisible(false);
         vista.btnEliminar.setVisible(false);
     }
 
- 
-   private long ultimoClick = 0;
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        long ahora = System.currentTimeMillis();
+        if (ahora - ultimoClick < 300) return; 
+        ultimoClick = ahora;
 
-@Override
-public void mouseClicked(MouseEvent e) {
-    long ahora = System.currentTimeMillis();
-    if (ahora - ultimoClick < 300) return; 
-    ultimoClick = ahora;
- 
-    if (!SwingUtilities.isLeftMouseButton(e)) return;
+        if (!SwingUtilities.isLeftMouseButton(e)) return;
+        if (e.getClickCount() > 1) return;
+        if (enProceso) return;
 
-    if (e.getClickCount() > 1) return;
+        Object src = e.getSource();
 
-    if (enProceso) return;
-
-    Object src = e.getSource();
-
-    if (src == vista.btnAgregar) {
-        enProceso = true;
-        agregarProducto();
-        enProceso = false;
-        return;
+        if (src == vista.btnAgregar) {
+            enProceso = true;
+            agregarProducto();
+            enProceso = false;
+            return;
+        }
+        if (src == vista.btnActualizar) {
+            enProceso = true;
+            actualizarProducto();
+            enProceso = false;
+            return;
+        }
+        if (src == vista.btnEliminar) {
+            enProceso = true;
+            eliminarProducto();
+            enProceso = false;
+            return;
+        }
+        if (src == vista.btnBuscar) {
+            enProceso = true;
+            buscarProducto();
+            enProceso = false;
+            return;
+        }
+        if (src == vista.btnReporte) {
+            return;
+        }
     }
 
-    if (src == vista.btnActualizar) {
-        enProceso = true;
-        actualizarProducto();
-        enProceso = false;
-        return;
-    }
-    if (src == vista.btnEliminar) {
-        enProceso = true;
-        eliminarProducto();
-        enProceso = false;
-        return;
-    }
-    if (src == vista.btnBuscar) {
-        enProceso = true;
-        buscarProducto();
-        enProceso = false;
-        return;
-    }
-   
-  
-if (src == vista.btnReporte) {
- 
-    return;
-}
-
-
-}
-
-    
-
-    
     public void agregarProducto() {
         enProceso = true;
         vista.btnAgregar.setEnabled(false);
@@ -206,7 +190,6 @@ if (src == vista.btnReporte) {
             String msg = validarCamposBasicos();
             if (msg != null) { JOptionPane.showMessageDialog(vista, msg); return; }
 
-           
             if (dao.existeProducto(idProd)) {
                 JOptionPane.showMessageDialog(vista, "Ya existe un producto con ese código de barras.");
                 return;
@@ -215,7 +198,8 @@ if (src == vista.btnReporte) {
             ModeloProducto p = buildProducto(idProd);
             if (p == null) return;
 
-            boolean ok = dao.registrarProducto(p);
+            // ====== ÚNICO CAMBIO: pasar idUsuario para AUDITORÍA ======
+            boolean ok = dao.registrarProducto(p, getUsuarioIdActual());
             JOptionPane.showMessageDialog(vista, ok ? "Producto registrado ✅" : "No se pudo registrar ❌");
             if (ok) limpiarFormulario(); 
 
@@ -244,7 +228,8 @@ if (src == vista.btnReporte) {
             ModeloProducto p = buildProducto(idProd);
             if (p == null) return;
 
-            boolean ok = dao.actualizarProducto(p);
+            // ====== ÚNICO CAMBIO: pasar idUsuario para AUDITORÍA ======
+            boolean ok = dao.actualizarProducto(p, getUsuarioIdActual());
             JOptionPane.showMessageDialog(vista, ok ? "Producto actualizado ✅" : "No se pudo actualizar ❌");
 
         } catch (Exception ex) {
@@ -270,7 +255,8 @@ if (src == vista.btnReporte) {
                     "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (r != JOptionPane.YES_OPTION) return;
 
-            boolean ok = dao.eliminarProducto(idProd);
+            // ====== ÚNICO CAMBIO: pasar idUsuario para AUDITORÍA ======
+            boolean ok = dao.eliminarProducto(idProd, getUsuarioIdActual());
             JOptionPane.showMessageDialog(vista, ok ? "Producto eliminado 🗑️" : "No se pudo eliminar ❌");
             if (ok) limpiarFormulario();
 
@@ -322,10 +308,6 @@ if (src == vista.btnReporte) {
             JOptionPane.showMessageDialog(vista, "Error al buscar: " + ex.getMessage());
         }
     }
-   
-
-
-
 
     @Override public void mousePressed(MouseEvent e) {}
     @Override public void mouseReleased(MouseEvent e) {}
