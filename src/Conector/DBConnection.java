@@ -31,19 +31,19 @@ public class DBConnection {
     }
 
     public void conectar() {
-        try {
-            
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-
-           
+    try {
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        if (this.link == null || this.link.isClosed()) {
             this.link = DriverManager.getConnection(this.URL, this.USUARIO, this.CLAVE);
+            this.link.setAutoCommit(true);
             System.out.println("✅ Conexión exitosa a Oracle");
-        } catch (ClassNotFoundException e) {
-            System.err.println("❌ No se encontró el driver de Oracle: " + e.getMessage());
-        } catch (SQLException ex) {
-            System.err.println("❌ Error al conectar con Oracle: " + ex.getMessage());
         }
+    } catch (ClassNotFoundException e) {
+        System.err.println("❌ No se encontró el driver de Oracle: " + e.getMessage());
+    } catch (SQLException ex) {
+        System.err.println("❌ Error al conectar con Oracle: " + ex.getMessage());
     }
+}
 
     public void desconectar() {
         try {
@@ -56,15 +56,14 @@ public class DBConnection {
         }
     }
 
-    public PreparedStatement preparar(String sql) {
-        try {
-            ps = link.prepareStatement(sql);
-        } catch (SQLException ex) {
-            System.err.println("Error al preparar SQL: " + ex.getMessage());
-        }
-        return ps;
+   public PreparedStatement preparar(String sql) {
+    try {
+        return getConexion().prepareStatement(sql); // <- usa conexión válida
+    } catch (SQLException ex) {
+        System.err.println("Error al preparar SQL: " + ex.getMessage());
+        return null;
     }
-
+}
     public PreparedStatement preparar(String sql, boolean retornarId) throws SQLException {
         if (this.link == null || this.link.isClosed()) {
             throw new SQLException("Conexión no establecida");
@@ -102,5 +101,16 @@ public class DBConnection {
             System.err.println("Error al revertir transacción: " + ex.getMessage());
         }
     }
+
+    public Connection getConexion() {
+    try {
+        if (this.link == null || this.link.isClosed()) {
+            conectar(); // reabre si hace falta
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException("No se pudo obtener conexión a Oracle", e);
+    }
+    return this.link;
+}
 
 }

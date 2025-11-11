@@ -36,7 +36,7 @@ public class GeneradorPDFreporte {
             // Totalización
             agregarTotalizacion(document, tablaReporte);
             
-            document.close();
+            document.close();//
         } catch (Exception e) {
             e.printStackTrace();
         }

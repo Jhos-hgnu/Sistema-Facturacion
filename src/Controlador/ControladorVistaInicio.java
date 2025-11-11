@@ -18,12 +18,19 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-
+//hb
 /**
  *
  * @author jhosu
  */
 
+
+// IMPORTANTE: usa tu util BCrypt
+import Seguridad.PasswordUtil;
+
+/**
+ * Controlador de la vista de inicio de sesión
+ */
 public class ControladorVistaInicio implements MouseListener {
 
     private final ModeloVistaInicio modelo;
@@ -37,7 +44,7 @@ public class ControladorVistaInicio implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getComponent().equals(modelo.getVistaInicio().btnAcceder)) {
-            inputIsEmpty(); // Dispara validación completa
+            inputIsEmpty();
         }
     }
 
@@ -58,27 +65,39 @@ public class ControladorVistaInicio implements MouseListener {
         }
     }
 
+    // ============================
+    // VALIDACIÓN PRINCIPAL
+    // ============================
     public void validarUsuario(String tipoUsuario,
                                String usuarioIngresado,
                                String contraIngresada,
                                String usuarioEncontrado,
-                               String contraEncontrada,
+                               String hashOPlainEncontrado,
                                boolean usuarioActivo) {
 
-        if (tipoUsuario == null) {
+        if (tipoUsuario == null || usuarioEncontrado == null || hashOPlainEncontrado == null) {
             mostrarError("Error al Iniciar Sesión, usuario o contraseña incorrectos");
-            limpiarDatos();
-            return;
-        }
-
-        if (!credencialesCorrectas(usuarioIngresado, contraIngresada, usuarioEncontrado, contraEncontrada)) {
-            mostrarError("Error al Iniciar Sesión. usuario o contraseña incorrectos");
             limpiarDatos();
             return;
         }
 
         if (!usuarioActivo) {
             mostrarError("Error al Iniciar Sesión, el usuario está dado de baja");
+            limpiarDatos();
+            return;
+        }
+
+        // Compara usuario (según tu diseño actual, deben ser iguales)
+        if (usuarioIngresado == null || !usuarioIngresado.equalsIgnoreCase(usuarioEncontrado)) {
+            mostrarError("Usuario o contraseña incorrectos.");
+            limpiarDatos();
+            return;
+        }
+
+        // Verifica contraseña (BCrypt o texto plano legado)
+        boolean passwordOK = verificarPassword(contraIngresada, hashOPlainEncontrado);
+        if (!passwordOK) {
+            mostrarError("Usuario o contraseña incorrectos.");
             limpiarDatos();
             return;
         }
@@ -94,14 +113,23 @@ public class ControladorVistaInicio implements MouseListener {
         redirigirSegunTipo(tipoUsuario);
     }
 
-    private boolean credencialesCorrectas(String usuarioIngresado,
-                                          String contraIngresada,
-                                          String usuarioEncontrado,
-                                          String contraEncontrada) {
-        return usuarioIngresado != null
-                && contraIngresada != null
-                && usuarioIngresado.equals(usuarioEncontrado)
-                && contraIngresada.equals(contraEncontrada);
+    /**
+     * Verifica la contraseña del login contra lo almacenado:
+     * - Si es hash BCrypt, usa PasswordUtil.verify
+     * - Si es texto plano (dato legado), compara equals
+     */
+    private boolean verificarPassword(String plainIngresada, String almacenadaBD) {
+        if (plainIngresada == null || almacenadaBD == null) return false;
+
+        // Detecta BCrypt por prefijo $2a/$2b/$2y
+        if (PasswordUtil.isHash(almacenadaBD)) {
+            return PasswordUtil.verify(plainIngresada, almacenadaBD);
+        } else {
+            // Compatibilidad con datos viejos
+            return plainIngresada.equals(almacenadaBD);
+            // Si quieres auto-actualizar a hash aquí, necesitas un método en SesionInicioImp/DAO
+            // que haga UPDATE a la fila del usuario con PasswordUtil.hash(plainIngresada).
+        }
     }
 
     private void mostrarError(String mensaje) {
@@ -109,9 +137,8 @@ public class ControladorVistaInicio implements MouseListener {
     }
 
     private void redirigirSegunTipo(String tipoUsuario) {
-        // Ajusta estos códigos a lo que te devuelve la BD:
-        final String ADMIN = "1";     // ó "ADMINISTRADOR"
-        final String VENDEDOR = "2"; // ó "VENDEDOR"
+        final String ADMIN = "1";     // o "ADMINISTRADOR"
+        final String VENDEDOR = "2";  // o "VENDEDOR"
 
         JFrame actual = modelo.getVistaInicio();
         try {
@@ -132,6 +159,9 @@ public class ControladorVistaInicio implements MouseListener {
         }
     }
 
+    // ============================
+    // Captura de inputs
+    // ============================
     public void inputIsEmpty() {
         String u = modelo.getVistaInicio().txtUsuario.getText();
         String p = String.valueOf(modelo.getVistaInicio().txtPassword.getPassword());
@@ -151,17 +181,17 @@ public class ControladorVistaInicio implements MouseListener {
             String usuarioIngresado = modelo.getVistaInicio().txtUsuario.getText();
             String contraseniaIngresada = String.valueOf(modelo.getVistaInicio().txtPassword.getPassword());
 
-            // Llama a tu implementación/DAO
+            // Llama a la implementación que consulta en BD (no tocar la vista)
             ModeloVistaInicio model = implementacion.consultaUsuario(usuarioIngresado, contraseniaIngresada);
 
-            // Siguiendo tu diseño actual, estos getters son estáticos
-            String usuarioEncontrado = model.getUsuarioEncontrado();
-            String contraseniaEncontrada = model.getContraseniaEncontrada();
-            String tipoDeUsuario = model.getTipoUsuario();
-            boolean usuarioActivo = model.isUsuarioActivo();
+            // OJO: estos getters vienen de tu SesionInicioImp/ModeloVistaInicio
+            String usuarioEncontrado    = model.getUsuarioEncontrado();
+            String hashOPlainEncontrado = model.getContraseniaEncontrada(); // ahora normalmente es HASH
+            String tipoDeUsuario        = model.getTipoUsuario();
+            boolean usuarioActivo       = model.isUsuarioActivo();
 
             validarUsuario(tipoDeUsuario, usuarioIngresado, contraseniaIngresada,
-                           usuarioEncontrado, contraseniaEncontrada, usuarioActivo);
+                           usuarioEncontrado, hashOPlainEncontrado, usuarioActivo);
 
         } catch (NullPointerException ex) {
             System.out.println("ERROR: Datos no encontrados");
@@ -174,6 +204,9 @@ public class ControladorVistaInicio implements MouseListener {
         }
     }
 
+    // ============================
+    // UX: Enter para enviar
+    // ============================
     public void configurarEnter() {
         JFrame frame = modelo.getVistaInicio();
         JPanel contentPanel = (JPanel) frame.getContentPane();
@@ -195,3 +228,4 @@ public class ControladorVistaInicio implements MouseListener {
         modelo.getVistaInicio().txtPassword.setText("");
     }
 }
+

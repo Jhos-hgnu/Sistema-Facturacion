@@ -4,15 +4,10 @@
  */
 package Implementacion;
 
-/**
- *
- * @author brand
- */
-
-
 import Conector.DBConnection;
 import Interfaces.UsuarioDAO;
 import Modelo.Usuario;
+import Seguridad.PasswordUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,21 +29,26 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     // ============================
     // Helpers de normalización
     // ============================
-    private String normalizarTipoUsuario(String tipo) {
-        if (tipo == null) throw new IllegalArgumentException("tipo_usuario es obligatorio");
-        String t = tipo.trim().toUpperCase();
-        switch (t) {
-            case "ADMIN":    return "1";
-            case "VENDEDOR": return "2";
-            case "1":
-            case "2":
-                return t;
-            default:
-                throw new IllegalArgumentException(
-                    "tipo_usuario inválido: " + tipo + " (usa ADMIN/VENDEDOR o 1/2 según tu regla)"
-                );
-        }
+   // Devuelve SIEMPRE el valor que acepta el CHECK: 'ADMIN' o 'VENDEDOR'.
+// Acepta tanto '1'/'2' como texto y los normaliza a TEXTO.
+private String normalizarTipoUsuario(String tipo) {
+    if (tipo == null) throw new IllegalArgumentException("tipo_usuario es obligatorio");
+    String t = tipo.trim().toUpperCase();
+    switch (t) {
+        case "1":
+        case "ADMIN":
+        case "ADMINISTRADOR":
+            return "ADMIN";
+        case "2":
+        case "VENDEDOR":
+            return "VENDEDOR";
+        default:
+            throw new IllegalArgumentException(
+                "tipo_usuario inválido: " + tipo + " (usa ADMIN/VENDEDOR o 1/2)"
+            );
     }
+}
+
 
     private String normalizarEstado(String estado) {
         if (estado == null) throw new IllegalArgumentException("estado es obligatorio");
@@ -90,8 +90,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         try {
             ps = cn.prepareStatement(sql);
             int i = 1;
-            ps.setString(i++, tipoNormal);
-            ps.setString(i++, u.getContrasena());
+ps.setString(i++, mapTipoForDB(cn, u.getTipoUsuario()));
+            ps.setString(i++, PasswordUtil.hash(u.getContrasena())); // <-- HASH AQUÍ
             ps.setString(i++, u.getPrimerNombre());
             ps.setString(i++, u.getSegundoNombre());
             ps.setString(i++, u.getPrimerApellido());
@@ -106,7 +106,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             OraclePreparedStatement ops = ps.unwrap(OraclePreparedStatement.class);
             ops.registerReturnParameter(i, OracleTypes.NUMBER);
 
-            ops.executeUpdate(); // si autocommit=true, queda confirmado
+            ops.executeUpdate();
 
             Long id = null;
             try (ResultSet rs = ops.getReturnResultSet()) {
@@ -119,47 +119,120 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     // ============================
-    // UPDATE
+    // UPDATE (dinámico para no tocar contraseña si viene vacía)
     // ============================
-    @Override
-    public boolean actualizar(Usuario u) throws Exception {
-        String sql = """
-            UPDATE usuarios SET
-              tipo_usuario = ?, contrasena = ?, primer_nombre = ?, segundo_nombre = ?,
-              primer_apellido = ?, segundo_apellido = ?, apellido_casado = ?,
-              email = ?, telefono = ?, id_rol = ?, estado = ?
-            WHERE id_usuario = ?
-        """;
+  @Override
+public boolean actualizar(Usuario u) throws Exception {
+    if (u.getIdUsuario() == null)
+        throw new IllegalArgumentException("id_usuario es obligatorio para actualizar");
 
-        if (u.getIdUsuario() == null)
-            throw new IllegalArgumentException("id_usuario es obligatorio para actualizar");
+    boolean cambiarPassword = (u.getContrasena() != null && !u.getContrasena().isBlank());
 
-        Connection cn = db.getConnection();
-        boolean ac = cn.getAutoCommit();
+    StringBuilder sb = new StringBuilder();
+    sb.append("UPDATE usuarios SET ");
+    sb.append("tipo_usuario = ?, ");
+    if (cambiarPassword) sb.append("contrasena = ?, ");
+    sb.append("primer_nombre = ?, ");
+    sb.append("segundo_nombre = ?, ");
+    sb.append("primer_apellido = ?, ");
+    sb.append("segundo_apellido = ?, ");
+    sb.append("apellido_casado = ?, ");
+    sb.append("email = ?, ");
+    sb.append("telefono = ?, ");
+    sb.append("id_rol = ?, ");
+    sb.append("estado = ? ");
+    sb.append("WHERE id_usuario = ?");
 
-        try (PreparedStatement ps = cn.prepareStatement(sql)) {
-            int i = 1;
-            ps.setString(i++, normalizarTipoUsuario(u.getTipoUsuario()));
-            ps.setString(i++, u.getContrasena());
-            ps.setString(i++, u.getPrimerNombre());
-            ps.setString(i++, u.getSegundoNombre());
-            ps.setString(i++, u.getPrimerApellido());
-            ps.setString(i++, u.getSegundoApellido());
-            ps.setString(i++, u.getApellidoCasado());
-            ps.setString(i++, u.getEmail());
-            ps.setString(i++, u.getTelefono());
-            ps.setObject(i++, u.getIdRol(), Types.NUMERIC);
-            ps.setString(i++, normalizarEstado(u.getEstado()));
-            ps.setObject(i++, u.getIdUsuario(), Types.NUMERIC);
+    String sql = sb.toString();
 
-            boolean ok = ps.executeUpdate() == 1;
-            if (!ac) cn.commit();      // evita ORA-17273
-            return ok;
-        } catch (Exception ex) {
-            if (!ac) try { cn.rollback(); } catch (Exception ignore) {}
-            throw ex;
+    Connection cn = db.getConnection();
+    boolean ac = cn.getAutoCommit();
+
+    try (PreparedStatement ps = cn.prepareStatement(sql)) {
+        int i = 1;
+
+        // 🔒 TEXTO que cumple el CHECK ('ADMIN'/'VENDEDOR')
+ps.setString(i++, mapTipoForDB(cn, u.getTipoUsuario()));
+
+        if (cambiarPassword) {
+            ps.setString(i++, PasswordUtil.hash(u.getContrasena()));
         }
+
+        ps.setString(i++, u.getPrimerNombre());
+        ps.setString(i++, u.getSegundoNombre());
+        ps.setString(i++, u.getPrimerApellido());
+        ps.setString(i++, u.getSegundoApellido());
+        ps.setString(i++, u.getApellidoCasado());
+        ps.setString(i++, u.getEmail());
+        ps.setString(i++, u.getTelefono());
+        ps.setObject(i++, u.getIdRol(), Types.NUMERIC);
+        ps.setString(i++, normalizarEstado(u.getEstado()));
+        ps.setObject(i++, u.getIdUsuario(), Types.NUMERIC);
+
+        boolean ok = ps.executeUpdate() == 1;
+        if (!ac) cn.commit();
+        return ok;
+    } catch (Exception ex) {
+        if (!ac) try { cn.rollback(); } catch (Exception ignore) {}
+        throw ex;
     }
+}
+// --- al inicio de la clase ---
+private enum TipoMode { NUMERIC, TEXT }
+private volatile TipoMode tipoModeCache = null;
+
+// Descubre el modo del CHECK: NUMERIC('1','2') o TEXT('ADMIN','VENDEDOR')
+private TipoMode resolveTipoMode(Connection cn) {
+    if (tipoModeCache != null) return tipoModeCache;
+    final String Q = """
+        SELECT search_condition
+        FROM user_constraints
+        WHERE table_name = 'USUARIOS'
+          AND constraint_type = 'C'
+          AND constraint_name = 'CHK_USUARIOS_TIPO_12'
+    """;
+    try (PreparedStatement ps = cn.prepareStatement(Q);
+         ResultSet rs = ps.executeQuery()) {
+        if (rs.next()) {
+            String cond = rs.getString(1);
+            // heurística simple
+            if (cond != null && cond.toUpperCase().contains("'ADMIN'")) {
+                tipoModeCache = TipoMode.TEXT;
+            } else {
+                // si menciona '1' o '2' y no ADMIN, asumimos numérico
+                tipoModeCache = TipoMode.NUMERIC;
+            }
+        } else {
+            // si no encontramos constraint, por defecto NUMERIC para no romper
+            tipoModeCache = TipoMode.NUMERIC;
+        }
+    } catch (Exception ignore) {
+        tipoModeCache = TipoMode.NUMERIC;
+    }
+    return tipoModeCache;
+}
+
+// Mapea lo que viene del UI a lo que exige el CHECK
+private String mapTipoForDB(Connection cn, String tipoUI) {
+    if (tipoUI == null) throw new IllegalArgumentException("tipo_usuario es obligatorio");
+    String t = tipoUI.trim().toUpperCase();
+    TipoMode mode = resolveTipoMode(cn);
+
+    // normaliza entradas del UI
+    boolean isAdmin = t.equals("ADMIN") || t.equals("ADMINISTRADOR") || t.equals("1");
+    boolean isVend  = t.equals("VENDEDOR") || t.equals("2");
+
+    if (!isAdmin && !isVend) {
+        throw new IllegalArgumentException("tipo_usuario inválido: " + tipoUI + " (usa ADMIN/VENDEDOR o 1/2)");
+    }
+
+    if (mode == TipoMode.TEXT) {
+        return isAdmin ? "ADMIN" : "VENDEDOR";
+    } else { // NUMERIC
+        return isAdmin ? "1" : "2";
+    }
+}
+
 
     // ============================
     // DELETE (físico)
@@ -197,6 +270,55 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         } catch (Exception ex) {
             if (!ac) try { cn.rollback(); } catch (Exception ignore) {}
             throw ex;
+        }
+    }
+
+    // ============================
+    // LOGIN (email o primer_nombre) con BCrypt + auto-upgrade
+    // ============================
+    public Usuario login(String identificador, String plainPassword) throws Exception {
+        final String SQL = """
+            SELECT
+              id_usuario, contrasena, tipo_usuario, primer_nombre, segundo_nombre,
+              primer_apellido, segundo_apellido, apellido_casado,
+              email, telefono, id_rol, estado
+            FROM usuarios
+            WHERE (UPPER(email) = UPPER(?) OR UPPER(primer_nombre) = UPPER(?))
+              AND estado = 'ACTIVO'
+            FETCH FIRST 1 ROWS ONLY
+        """;
+
+        try (PreparedStatement ps = db.preparar(SQL)) {
+            ps.setString(1, identificador);
+            ps.setString(2, identificador);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) return null;
+
+                long id = rs.getLong("id_usuario");
+                String stored = rs.getString("contrasena");
+
+                boolean ok;
+                if (PasswordUtil.isHash(stored)) {
+                    ok = PasswordUtil.verify(plainPassword, stored);
+                } else {
+                    // compatibilidad con texto plano legado
+                    ok = plainPassword.equals(stored);
+                    if (ok) {
+                        String newHash = PasswordUtil.hash(plainPassword);
+                        try (PreparedStatement up = db.preparar(
+                                "UPDATE usuarios SET contrasena=? WHERE id_usuario=?")) {
+                            up.setString(1, newHash);
+                            up.setLong(2, id);
+                            up.executeUpdate();
+                        }
+                    }
+                }
+
+                if (!ok) return null;
+
+                return map(rs); // devuelve el usuario logueado
+            }
         }
     }
 
@@ -285,7 +407,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         if (rs.wasNull()) u.setIdUsuario(null);
 
         u.setTipoUsuario(rs.getString("tipo_usuario"));
-        u.setContrasena(rs.getString("contrasena"));
+        u.setContrasena(rs.getString("contrasena")); // hash (no lo muestres en UI)
         u.setPrimerNombre(rs.getString("primer_nombre"));
         u.setSegundoNombre(rs.getString("segundo_nombre"));
         u.setPrimerApellido(rs.getString("primer_apellido"));
@@ -304,4 +426,3 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         return u;
     }
 }
-
