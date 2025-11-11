@@ -2,9 +2,12 @@ package Controlador;
 
 import Implementacion.ReporteVentaDAO;
 import Modelo.ModeloMejorCliente;
+import Modelo.ModeloProductoMasVendido;
 import Modelo.ModeloReporteMensual;
 import Modelo.ModeloReporteVentaDia;
+import Modelo.ModeloVentaRangoFechas;
 import Modelo.TipoRankingCliente;
+import Modelo.TipoRankingProducto;
 import Utilities.GeneradorReporteVentas;
 import Vistas.PanelReportesVentas;
 import java.io.IOException;
@@ -216,26 +219,240 @@ public class ControladorReportesVentas {
             // Ignorar error de apertura
         }
     }
-    
-    
-    
-    public void generarReporteMejoresClientes(TipoRankingCliente tipoRanking, int top, 
-                                                String fechaInicio, String fechaFin){
-     
-        
+
+    public void generarReporteMejoresClientes(TipoRankingCliente tipoRanking, int top,
+            String fechaInicio, String fechaFin) {
+
         SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
             @Override
             protected Boolean doInBackground() throws Exception {
                 try {
-                    System.out.println("🔄 Generando reporte mejores clientes: " + tipoRanking.getDescripcion());
-                    
+                    System.out.println("Generando reporte mejores clientes: " + tipoRanking.getDescripcion());
+
                     // Obtener datos
                     List<ModeloMejorCliente> mejoresClientes = reporteDao.obtenerMejoresClientes(
-                        tipoRanking, top, fechaInicio, fechaFin);
-                    
+                            tipoRanking, top, fechaInicio, fechaFin);
+
                     if (mejoresClientes.isEmpty()) {
                         JOptionPane.showMessageDialog(null,
-                            "No se encontraron clientes para el período especificado",
+                                "No se encontraron clientes para el período especificado",
+                                "Sin datos",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        return false;
+                    }
+
+                    // Generar CSV
+                    String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+                    String userHome = System.getProperty("user.home");
+                    String periodo = fechaInicio + " a " + fechaFin;
+                    String filePath = userHome + "/Desktop/Reportes Farmacia/mejores_clientes_"
+                            + tipoRanking.name().toLowerCase() + "_" + timestamp + ".csv";
+
+                    return csvGenerator.generarReporteMejoresClientesCSV(
+                            mejoresClientes, tipoRanking, periodo, filePath);
+
+                } catch (Exception e) {
+                    System.err.println("Error generando reporte mejores clientes: " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    boolean exito = get();
+
+                    if (exito) {
+                        JOptionPane.showMessageDialog(null,
+                                "Reporte de mejores clientes generado exitosamente\n"
+                                + "📁 Guardado en: Escritorio/Reportes Farmacia",
+                                "Éxito",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Error al generar el reporte de mejores clientes",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null,
+                            "Error: " + e.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        };
+
+        worker.execute();
+
+    }
+
+    public void generarReporteProductosMasVendidosCSV(TipoRankingProducto tipoRanking, int top) {
+        SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                try {
+                    System.out.println("Generando reporte productos: " + tipoRanking.getDescripcion());
+
+                    // Configurar período (últimos 3 meses por defecto)
+                    String fechaFin = java.time.LocalDate.now().toString();
+                    String fechaInicio = java.time.LocalDate.now().minusMonths(3).withDayOfMonth(1).toString();
+                    String periodo = fechaInicio + " a " + fechaFin;
+
+                    // Obtener datos
+                    List<ModeloProductoMasVendido> productos
+                            = reporteDao.obtenerProductosMasVendidos(tipoRanking, top, fechaInicio, fechaFin);
+
+                    if (productos.isEmpty()) {
+                        JOptionPane.showMessageDialog(null,
+                                "No se encontraron productos vendidos en el período especificado",
+                                "Sin datos",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        return false;
+                    }
+
+                    // Generar CSV
+                    String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+                    String userHome = System.getProperty("user.home");
+                    String filePath = userHome + "/Desktop/Reportes Farmacia/productos_mas_vendidos_"
+                            + tipoRanking.name().toLowerCase() + "_" + timestamp + ".csv";
+
+                    return csvGenerator.generarReporteProductosMasVendidos(
+                            productos, tipoRanking, top, periodo, filePath);
+
+                } catch (Exception e) {
+                    System.err.println("Error generando reporte productos: " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    boolean exito = get();
+
+                    if (exito) {
+                        JOptionPane.showMessageDialog(null,
+                                " Reporte de productos más vendidos generado exitosamente\n"
+                                + " Guardado en: Escritorio/Reportes Farmacia",
+                                "Éxito",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null,
+                            "Error: " + e.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        };
+
+        worker.execute();
+    }
+    
+    
+    public void generarReporteProductosMasVendidosCSVFechas(TipoRankingProducto tipoRanking, int top, 
+                                                  String fechaInicio, String fechaFin) {
+    SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+        @Override
+        protected Boolean doInBackground() throws Exception {
+            try {
+                System.out.println("🔄 Generando reporte productos: " + tipoRanking.getDescripcion());
+
+                // VALIDAR FECHAS (las recibimos como parámetros ahora)
+                if (fechaInicio == null || fechaFin == null) {
+                    JOptionPane.showMessageDialog(null,
+                        "Debe especificar un rango de fechas",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+
+                String periodo = fechaInicio + " a " + fechaFin;
+
+                // Obtener datos (usamos las fechas que nos pasaron)
+                List<ModeloProductoMasVendido> productos
+                        = reporteDao.obtenerProductosMasVendidos(tipoRanking, top, fechaInicio, fechaFin);
+
+                if (productos.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "No se encontraron productos vendidos en el período especificado: " + periodo,
+                            "Sin datos",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return false;
+                }
+
+                // Generar CSV
+                String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
+                String userHome = System.getProperty("user.home");
+                String filePath = userHome + "/Desktop/Reportes Farmacia/productos_mas_vendidos_"
+                        + tipoRanking.name().toLowerCase() + "_" + timestamp + ".csv";
+
+                return csvGenerator.generarReporteProductosMasVendidos(
+                        productos, tipoRanking, top, periodo, filePath);
+
+            } catch (Exception e) {
+                System.err.println("❌ Error generando reporte productos: " + e.getMessage());
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void done() {
+            try {
+                boolean exito = get();
+
+                if (exito) {
+                    JOptionPane.showMessageDialog(null,
+                            "✅ Reporte de productos más vendidos generado exitosamente\n" +
+                            "📁 Guardado en: Escritorio/Reportes Farmacia",
+                            "Éxito",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: " + e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    };
+
+    worker.execute();
+    }
+    
+     /**
+     * Genera reporte de ventas por rango de fechas específico
+     */
+    public void generarReporteVentasRangoCSV(String fechaInicio, String fechaFin) {
+        SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                try {
+                    System.out.println("🔄 Generando reporte ventas por rango: " + fechaInicio + " a " + fechaFin);
+                    
+                    // Validar fechas
+                    if (fechaInicio == null || fechaFin == null || fechaInicio.isEmpty() || fechaFin.isEmpty()) {
+                        JOptionPane.showMessageDialog(null,
+                            "Debe especificar un rango de fechas válido",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
+                    
+                    // Obtener datos
+                    List<ModeloVentaRangoFechas> ventas = reporteDao.obtenerVentasPorRangoFechas(fechaInicio, fechaFin);
+                    
+                    if (ventas.isEmpty()) {
+                        JOptionPane.showMessageDialog(null,
+                            "No se encontraron ventas en el período especificado:\n" +
+                            fechaInicio + " a " + fechaFin,
                             "Sin datos",
                             JOptionPane.INFORMATION_MESSAGE);
                         return false;
@@ -244,15 +461,13 @@ public class ControladorReportesVentas {
                     // Generar CSV
                     String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
                     String userHome = System.getProperty("user.home");
-                    String periodo = fechaInicio + " a " + fechaFin;
-                    String filePath = userHome + "/Desktop/Reportes Farmacia/mejores_clientes_" + 
-                                    tipoRanking.name().toLowerCase() + "_" + timestamp + ".csv";
+                    String filePath = userHome + "/Desktop/Reportes Farmacia/ventas_rango_" + 
+                                    fechaInicio + "_a_" + fechaFin + "_" + timestamp + ".csv";
                     
-                    return csvGenerator.generarReporteMejoresClientesCSV(
-                        mejoresClientes, tipoRanking, periodo, filePath);
+                    return csvGenerator.generarReporteVentasRangoCSV(ventas, fechaInicio, fechaFin, filePath);
                     
                 } catch (Exception e) {
-                    System.err.println("❌ Error generando reporte mejores clientes: " + e.getMessage());
+                    System.err.println("❌ Error generando reporte ventas rango: " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 }
@@ -265,15 +480,10 @@ public class ControladorReportesVentas {
                     
                     if (exito) {
                         JOptionPane.showMessageDialog(null,
-                            "✅ Reporte de mejores clientes generado exitosamente\n" +
+                            "✅ Reporte de ventas por rango generado exitosamente\n" +
                             "📁 Guardado en: Escritorio/Reportes Farmacia",
                             "Éxito",
                             JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(null,
-                            "Error al generar el reporte de mejores clientes",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
                     }
                     
                 } catch (Exception e) {
@@ -286,9 +496,8 @@ public class ControladorReportesVentas {
         };
         
         worker.execute();
-        
-        
-        
     }
+    
+    
 
 }

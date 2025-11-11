@@ -7,9 +7,12 @@ package Implementacion;
 import Conector.DBConnection;
 import Conector.SQL;
 import Modelo.ModeloMejorCliente;
+import Modelo.ModeloProductoMasVendido;
 import Modelo.ModeloReporteMensual;
 import Modelo.ModeloReporteVentaDia;
+import Modelo.ModeloVentaRangoFechas;
 import Modelo.TipoRankingCliente;
+import Modelo.TipoRankingProducto;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -420,5 +423,181 @@ public class ReporteVentaDAO {
         return obtenerMejoresClientes(tipoRanking, top, fechaInicio, fechaFin);
     }
 
+ 
+    
+    public List<ModeloProductoMasVendido> obtenerProductosMasVendidos(
+            TipoRankingProducto tipoRanking, int top, String fechaInicio, String fechaFin) {
+        
+        List<ModeloProductoMasVendido> productos = new ArrayList<>();
+        
+        try {
+            dbConnection.conectar();
+            Connection conn = dbConnection.getConnection();
+            
+            // Calcular total general para porcentajes
+            double totalGeneral = calcularTotalVentasPeriodo(fechaInicio, fechaFin);
+            
+            // Construir query según el tipo de ranking
+            String sql = construirQueryProductos(tipoRanking);
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, fechaInicio);
+            pstmt.setString(2, fechaFin);
+            pstmt.setInt(3, top);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            int ranking = 1;
+            while (rs.next()) {
+                double montoProducto = rs.getDouble("monto_total");
+                double porcentaje = (totalGeneral > 0) ? (montoProducto / totalGeneral) * 100 : 0;
+                
+                ModeloProductoMasVendido producto = new ModeloProductoMasVendido(
+                    rs.getInt("id_producto"),
+                    rs.getString("nombre_producto"),
+                    rs.getString("categoria"),
+                    rs.getInt("cantidad_vendida"),
+                    montoProducto,
+                    porcentaje,
+                    ranking++
+                );
+                productos.add(producto);
+            }
+            
+            rs.close();
+            pstmt.close();
+            
+        } catch (SQLException e) {
+            System.err.println("❌ Error en obtenerProductosMasVendidos: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            dbConnection.desconectar();
+        }
+        
+        return productos;
+    }
+    
+    /**
+     * Construye la query SQL según el tipo de ranking
+     */
+    private String construirQueryProductos(TipoRankingProducto tipoRanking) {
+        String orderBy = "";
+        
+        switch (tipoRanking) {
+            case POR_CANTIDAD:
+                orderBy = "cantidad_vendida DESC";
+                break;
+            case POR_MONTO:
+                orderBy = "monto_total DESC";
+                break;
+            default:
+                orderBy = "cantidad_vendida DESC";
+        }
+        
+        return "SELECT * FROM ( " +
+               "    SELECT " +
+               "        p.id_producto, " +
+               "        p.nombre_producto, " +
+               "        c.nombre as categoria, " +
+               "        SUM(dv.cantidad) as cantidad_vendida, " +
+               "        SUM(dv.cantidad * dv.precio_venta) as monto_total " +
+               "    FROM productos p " +
+               "    JOIN detalle_venta dv ON p.id_producto = dv.id_producto " +
+               "    JOIN venta v ON dv.id_venta = v.id_venta " +
+               "    JOIN categorias c ON p.id_categoria = c.id_categoria " +
+               "    WHERE v.fecha BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 1 " +
+               "    GROUP BY p.id_producto, p.nombre_producto, c.nombre " +
+               "    ORDER BY " + orderBy +
+               ") WHERE ROWNUM <= ?";
+    }
+    
+    /**
+     * Calcula el total de ventas en el período para los porcentajes
+     */
+//    private double calcularTotalVentasPeriodo(String fechaInicio, String fechaFin) {
+//        double total = 0;
+//        
+//        try {
+//            Connection conn = dbConnection.getConnection();
+//            String sql = "SELECT NVL(SUM(total), 0) as total_periodo " +
+//                         "FROM venta " +
+//                         "WHERE fecha BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 1";
+//            
+//            PreparedStatement pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, fechaInicio);
+//            pstmt.setString(2, fechaFin);
+//            ResultSet rs = pstmt.executeQuery();
+//            
+//            if (rs.next()) {
+//                total = rs.getDouble("total_periodo");
+//            }
+//            
+//            rs.close();
+//            pstmt.close();
+//            
+//        } catch (SQLException e) {
+//            System.err.println("❌ Error calculando total período: " + e.getMessage());
+//        }
+//        
+//        return total;
+//    }
+    
+    
+    public List<ModeloVentaRangoFechas> obtenerVentasPorRangoFechas(String fechaInicio, String fechaFin) {
+        List<ModeloVentaRangoFechas> ventas = new ArrayList<>();
+        
+        try {
+            dbConnection.conectar();
+            Connection conn = dbConnection.getConnection();
+            
+            String sql = "SELECT " +
+                         "    TO_CHAR(v.fecha, 'YYYY-MM-DD') as fecha, " +
+                         "    TO_CHAR(v.fecha, 'HH24:MI') as hora, " +
+                         "    'F' || TO_CHAR(v.id_venta) as factura, " +
+                         "    c.primer_nombre || ' ' || c.primer_apellido as cliente, " +
+                         "    v.total, " +
+                         "    u.primer_nombre || ' ' || u.primer_apellido as vendedor, " +
+                         "    v.tipo_pago, " +
+                         "    v.id_venta " +
+                         "FROM venta v " +
+                         "JOIN clientes c ON v.nit = c.nit " +
+                         "JOIN usuarios u ON v.id_usuario = u.id_usuario " +
+                         "WHERE v.fecha BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') + 1 " +
+                         "ORDER BY v.fecha ASC";
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, fechaInicio);
+            pstmt.setString(2, fechaFin);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                String productos = obtenerProductosVenta(rs.getInt("id_venta"));
+                ModeloVentaRangoFechas venta = new ModeloVentaRangoFechas(
+                    rs.getString("fecha"),
+                    rs.getString("hora"),
+                    rs.getString("factura"),
+                    rs.getString("cliente"),
+                    productos,
+                    rs.getDouble("total"),
+                    rs.getString("vendedor"),
+                    rs.getString("tipo_pago")
+                );
+                ventas.add(venta);
+            }
+            
+            rs.close();
+            pstmt.close();
+            
+            System.out.println("✅ Se obtuvieron " + ventas.size() + " ventas del rango " + fechaInicio + " a " + fechaFin);
+            
+        } catch (SQLException e) {
+            System.err.println("❌ Error en obtenerVentasPorRangoFechas: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            dbConnection.desconectar();
+        }
+        
+        return ventas;
+    }
     
 }

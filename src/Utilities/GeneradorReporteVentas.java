@@ -11,9 +11,12 @@ package Utilities;
 import Modelo.ModeloClientesVentas;
 import Modelo.ModeloDetalleVenta;
 import Modelo.ModeloMejorCliente;
+import Modelo.ModeloProductoMasVendido;
 import Modelo.ModeloReporteMensual;
 import Modelo.ModeloReporteVentaDia;
+import Modelo.ModeloVentaRangoFechas;
 import Modelo.TipoRankingCliente;
+import Modelo.TipoRankingProducto;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import java.io.File;
@@ -22,7 +25,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JTable;
 
 public class GeneradorReporteVentas {
@@ -238,5 +243,194 @@ public class GeneradorReporteVentas {
             return false;
         }
     }
+     
+     
+     
+     public boolean generarReporteProductosMasVendidos( List<ModeloProductoMasVendido> productos, 
+            TipoRankingProducto tipoRanking,
+            int top, String periodo, String filePath){
+         
+         
+         // Crear directorio si no existe
+        java.io.File archivo = new java.io.File(filePath);
+        java.io.File directorio = archivo.getParentFile();
+        if (directorio != null && !directorio.exists()) {
+            directorio.mkdirs();
+        }
+        
+        try (FileWriter writer = new FileWriter(archivo)) {
+            // 1. ENCABEZADO DEL REPORTE
+            writer.append("REPORTE DE PRODUCTOS MÁS VENDIDOS\n");
+            writer.append("Criterio:,").append(tipoRanking.getDescripcion()).append("\n");
+            writer.append("Top:,").append(String.valueOf(top)).append(" productos\n");
+            writer.append("Período:,").append(periodo).append("\n");
+            writer.append("Fecha de generación:,").append(new java.util.Date().toString()).append("\n\n");
+            
+            // 2. ENCABEZADO DE LA TABLA
+            writer.append("RANKING,ID PRODUCTO,PRODUCTO,CATEGORIA,CANTIDAD VENDIDA,MONTO TOTAL,PRECIO PROMEDIO,% DEL TOTAL\n");
+            
+            // 3. DATOS DE PRODUCTOS
+            int totalUnidades = 0;
+            double totalMonto = 0;
+            
+            for (ModeloProductoMasVendido producto : productos) {
+                writer.append(String.valueOf(producto.getRanking())).append(",");
+                writer.append(String.valueOf(producto.getIdProducto())).append(",");
+                writer.append(escapeCSV(producto.getNombreProducto())).append(",");
+                writer.append(escapeCSV(producto.getCategoria())).append(",");
+                writer.append(String.valueOf(producto.getCantidadVendida())).append(",");
+                writer.append(producto.getMontoTotalFormateado()).append(",");
+                writer.append(producto.getPrecioPromedioFormateado()).append(",");
+                writer.append(producto.getPorcentajeFormateado()).append("\n");
+                
+                totalUnidades += producto.getCantidadVendida();
+                totalMonto += producto.getMontoTotal();
+            }
+            
+            // 4. RESUMEN Y ANÁLISIS
+            writer.append("\n");
+            writer.append("RESUMEN DEL REPORTE\n");
+            writer.append("Total productos en reporte:,").append(String.valueOf(productos.size())).append("\n");
+            writer.append("Total unidades vendidas:,").append(String.valueOf(totalUnidades)).append("\n");
+            writer.append("Monto total de productos:,").append(String.format("Q%.2f", totalMonto)).append("\n");
+            writer.append("Unidades promedio por producto:,").append(String.format("%.1f", (double) totalUnidades / productos.size())).append("\n");
+            
+            // 5. ANÁLISIS ESPECÍFICO POR CRITERIO
+            writer.append("\n");
+            writer.append("ANÁLISIS - ").append(tipoRanking.getDescripcion()).append("\n");
+            
+            if (!productos.isEmpty()) {
+                ModeloProductoMasVendido topProducto = productos.get(0);
+                
+                if (tipoRanking == TipoRankingProducto.POR_CANTIDAD) {
+                    writer.append("Producto más vendido:,").append(escapeCSV(topProducto.getNombreProducto())).append("\n");
+                    writer.append("Unidades vendidas:,").append(String.valueOf(topProducto.getCantidadVendida())).append("\n");
+                    writer.append("Porcentaje del top 1:,").append(String.format("%.1f%%", (double) topProducto.getCantidadVendida() / totalUnidades * 100)).append("\n");
+                } else {
+                    writer.append("Producto que más genera:,").append(escapeCSV(topProducto.getNombreProducto())).append("\n");
+                    writer.append("Monto generado:,").append(topProducto.getMontoTotalFormateado()).append("\n");
+                    writer.append("Porcentaje del top 1:,").append(topProducto.getPorcentajeFormateado()).append("\n");
+                }
+            }
+            
+            System.out.println("Reporte productos más vendidos CSV generado: " + archivo.getAbsolutePath());
+            return true;
+            
+        } catch (IOException e) {
+            System.err.println("Error al generar reporte productos CSV: " + e.getMessage());
+            return false;
+        }
+         
+     }
+     
+     
+     /**
+     * Genera reporte CSV de ventas por rango de fechas
+     * Similar al de ventas del día pero con más detalles
+     */
+    public boolean generarReporteVentasRangoCSV(List<ModeloVentaRangoFechas> ventas, 
+                                               String fechaInicio, String fechaFin, 
+                                               String filePath) {
+        // Crear directorio
+        java.io.File archivo = new java.io.File(filePath);
+        java.io.File directorio = archivo.getParentFile();
+        if (directorio != null && !directorio.exists()) {
+            directorio.mkdirs();
+        }
+        
+        try (FileWriter writer = new FileWriter(archivo)) {
+            // 1. ENCABEZADO DEL REPORTE
+            writer.append("REPORTE DE VENTAS POR RANGO DE FECHAS\n");
+            writer.append("Período:,").append(fechaInicio).append(" a ").append(fechaFin).append("\n");
+            writer.append("Fecha de generación:,").append(new java.util.Date().toString()).append("\n");
+            writer.append("Total de transacciones:,").append(String.valueOf(ventas.size())).append("\n\n");
+            
+            // 2. ENCABEZADO DE LA TABLA
+            writer.append("FECHA,HORA,FACTURA,CLIENTE,PRODUCTOS,VENDEDOR,TIPO PAGO,TOTAL\n");
+            
+            // 3. DATOS DE VENTAS
+            double totalGeneral = 0;
+            int contadorCredito = 0;
+            int contadorContado = 0;
+            
+            for (ModeloVentaRangoFechas venta : ventas) {
+                writer.append(escapeCSV(venta.getFecha())).append(",");
+                writer.append(escapeCSV(venta.getHora())).append(",");
+                writer.append(escapeCSV(venta.getNumeroFactura())).append(",");
+                writer.append(escapeCSV(venta.getCliente())).append(",");
+                writer.append(escapeCSV(venta.getProductos())).append(",");
+                writer.append(escapeCSV(venta.getVendedor())).append(",");
+                writer.append(escapeCSV(venta.getTipoPago())).append(",");
+                writer.append(venta.getTotalFormateado()).append("\n");
+                
+                totalGeneral += venta.getTotal();
+                
+                // Contar tipos de pago
+                if ("CREDITO".equalsIgnoreCase(venta.getTipoPago())) {
+                    contadorCredito++;
+                } else {
+                    contadorContado++;
+                }
+            }
+            
+            // 4. RESUMEN Y ESTADÍSTICAS
+            writer.append("\n");
+            writer.append("RESUMEN DEL PERÍODO\n");
+            writer.append("Total ventas del período:,").append(String.format("Q%.2f", totalGeneral)).append("\n");
+            writer.append("Cantidad total de transacciones:,").append(String.valueOf(ventas.size())).append("\n");
+            writer.append("Ventas al contado:,").append(String.valueOf(contadorContado)).append("\n");
+            writer.append("Ventas a crédito:,").append(String.valueOf(contadorCredito)).append("\n");
+            writer.append("Ticket promedio:,").append(String.format("Q%.2f", ventas.size() > 0 ? totalGeneral / ventas.size() : 0)).append("\n");
+            
+            // 5. ANÁLISIS ADICIONAL
+            writer.append("\n");
+            writer.append("ANÁLISIS ADICIONAL\n");
+            writer.append("Porcentaje ventas contado:,").append(String.format("%.1f%%", (double) contadorContado / ventas.size() * 100)).append("\n");
+            writer.append("Porcentaje ventas crédito:,").append(String.format("%.1f%%", (double) contadorCredito / ventas.size() * 100)).append("\n");
+            
+            // Ventas por día (si hay datos)
+            if (!ventas.isEmpty()) {
+                Map<String, Double> ventasPorDia = calcularVentasPorDia(ventas);
+                writer.append("\n");
+                writer.append("VENTAS POR DÍA\n");
+                for (Map.Entry<String, Double> entry : ventasPorDia.entrySet()) {
+                    writer.append(entry.getKey()).append(",").append(String.format("Q%.2f", entry.getValue())).append("\n");
+                }
+            }
+            
+            System.out.println("Reporte ventas por rango CSV generado: " + archivo.getAbsolutePath());
+            return true;
+            
+        } catch (IOException e) {
+            System.err.println("Error al generar reporte ventas rango CSV: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Calcula ventas totales por día para el análisis
+     */
+    private Map<String, Double> calcularVentasPorDia(List<ModeloVentaRangoFechas> ventas) {
+        Map<String, Double> ventasPorDia = new LinkedHashMap<>(); // LinkedHashMap mantiene el orden
+        
+        for (ModeloVentaRangoFechas venta : ventas) {
+            String fecha = venta.getFecha();
+            ventasPorDia.put(fecha, ventasPorDia.getOrDefault(fecha, 0.0) + venta.getTotal());
+        }
+        
+        return ventasPorDia;
+    }
+    
+   
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
 
 }
