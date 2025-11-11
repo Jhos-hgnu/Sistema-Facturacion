@@ -11,7 +11,6 @@ import Controlador.ControladorDetalleVentas;
  * @author cindy
  */
 public class PanelDetalleVenta extends javax.swing.JPanel {
-
     private ControladorDetalleVentas controlador;
 
     /**
@@ -19,9 +18,6 @@ public class PanelDetalleVenta extends javax.swing.JPanel {
      */
     public PanelDetalleVenta() {
         initComponents();
-
-        // Instancia del controlador (enlaza la vista con la lógica)
-        controlador = new ControladorDetalleVentas(this);
 
     }
 
@@ -96,9 +92,9 @@ public class PanelDetalleVenta extends javax.swing.JPanel {
         btnAgregar = new javax.swing.JPanel();
         agregar = new javax.swing.JLabel();
         btnActualizar = new javax.swing.JPanel();
-        actualizar = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JPanel();
         eliminar = new javax.swing.JLabel();
+        actualizar = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(28, 95, 118));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -290,28 +286,26 @@ public class PanelDetalleVenta extends javax.swing.JPanel {
         btnActualizar.setBackground(new java.awt.Color(75, 128, 146));
         btnActualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnActualizar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        actualizar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        actualizar.setForeground(new java.awt.Color(255, 255, 255));
-        actualizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        actualizar.setText("Actualizar");
-        actualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnActualizar.add(actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 30));
-
-        add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 460, 90, 30));
+        add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 500, 90, 30));
 
         btnEliminar.setBackground(new java.awt.Color(75, 128, 146));
         btnEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnEliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 500, 90, 30));
 
         eliminar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         eliminar.setForeground(new java.awt.Color(255, 255, 255));
         eliminar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         eliminar.setText("Eliminar");
         eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEliminar.add(eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 50, 30));
+        add(eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 50, 30));
 
-        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 460, 90, 30));
+        actualizar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        actualizar.setForeground(new java.awt.Color(255, 255, 255));
+        actualizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        actualizar.setText("Actualizar");
+        actualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        add(actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 460, 70, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
