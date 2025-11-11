@@ -162,9 +162,9 @@ public class PanelProducto extends javax.swing.JPanel {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Actualizar");
         jLabel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnActualizar.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        btnActualizar.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        fondoPanel.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 90, 30));
+        fondoPanel.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, 110, 30));
 
         btnAgregar.setBackground(new java.awt.Color(75, 128, 146));
         btnAgregar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -175,9 +175,9 @@ public class PanelProducto extends javax.swing.JPanel {
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Agregar");
         jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAgregar.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        btnAgregar.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        fondoPanel.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 90, 30));
+        fondoPanel.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, 110, 30));
 
         btnEliminar.setBackground(new java.awt.Color(75, 128, 146));
         btnEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -188,9 +188,9 @@ public class PanelProducto extends javax.swing.JPanel {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Eliminar");
         jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEliminar.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        btnEliminar.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        fondoPanel.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, 90, 30));
+        fondoPanel.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, 110, 30));
 
         btnBuscar.setBackground(new java.awt.Color(75, 128, 146));
         btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -201,9 +201,9 @@ public class PanelProducto extends javax.swing.JPanel {
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Buscar");
         jLabel15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscar.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        btnBuscar.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        fondoPanel.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 520, 90, 30));
+        fondoPanel.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 520, 110, 30));
 
         labelNombreP.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         labelNombreP.setForeground(new java.awt.Color(255, 255, 255));
@@ -337,9 +337,9 @@ public class PanelProducto extends javax.swing.JPanel {
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("Reporte");
         jLabel23.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnReporte.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        btnReporte.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        fondoPanel.add(btnReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 520, 90, 30));
+        fondoPanel.add(btnReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 520, 110, 30));
 
         btnlimpiar.setBackground(new java.awt.Color(75, 128, 146));
         btnlimpiar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -350,9 +350,9 @@ public class PanelProducto extends javax.swing.JPanel {
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("Limpiar");
         jLabel24.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnlimpiar.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        btnlimpiar.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        fondoPanel.add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, 90, 30));
+        fondoPanel.add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 110, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

@@ -142,9 +142,9 @@ txtIdCategoria.setEnabled(false);
         registrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         registrar.setText("Registrar");
         registrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnRegistrar.add(registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 100, 20));
+        btnRegistrar.add(registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 530, -1, 30));
+        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, -1, 30));
 
         btnBorrar.setBackground(new java.awt.Color(75, 128, 146));
         btnBorrar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -157,7 +157,7 @@ txtIdCategoria.setEnabled(false);
         borrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBorrar.add(borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 530, -1, 30));
+        add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 510, -1, 30));
 
         btnBuscar.setBackground(new java.awt.Color(75, 128, 146));
         btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -176,19 +176,22 @@ txtIdCategoria.setEnabled(false);
         );
         btnBuscarLayout.setVerticalGroup(
             btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnBuscarLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnBuscarLayout.createSequentialGroup()
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 530, 110, 30));
+        add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 290, 110, 30));
 
+        btnActualizar.setBackground(new java.awt.Color(75, 128, 146));
         btnActualizar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
         btnActualizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnActualizar.setText("Actualizar");
+        btnActualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 530, 110, 30));
+        btnActualizar.setOpaque(true);
+        add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 510, 110, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked

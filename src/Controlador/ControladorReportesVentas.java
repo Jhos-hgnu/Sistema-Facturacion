@@ -30,7 +30,7 @@ public class ControladorReportesVentas {
    
     
     public void configuracionListeners(){
-        vista.getBtnReporteVentasDia().addActionListener(e -> generarReporteVentasDiaCSV());
+       // vista.getBtnReporteVentasDia().addActionListener(e -> generarReporteVentasDiaCSV());
         
     }
    
