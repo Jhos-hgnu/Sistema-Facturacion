@@ -21,6 +21,6 @@ public interface IProducto {
     boolean actualizarProducto(ModeloProducto p, long idUsuario);
     boolean eliminarProducto(BigDecimal idProducto, long idUsuario);
 
-
+/*hola*/
 }
 
