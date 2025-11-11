@@ -13,13 +13,13 @@ import Controlador.ControladorCuentasCobrar;
 public class PanelCuentasCobrar extends javax.swing.JPanel {
 
     private ControladorCuentasCobrar controlador;
-    
+
     /**
      * Creates new form PanelCuentasCobrar
      */
     public PanelCuentasCobrar() {
         initComponents();
-        
+
         controlador = new ControladorCuentasCobrar(this);
     }
 
