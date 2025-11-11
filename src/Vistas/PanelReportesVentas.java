@@ -4,6 +4,7 @@
  */
 package Vistas;
 
+import Controlador.ControladorReportesVentas;
 import javax.swing.JSpinner;
 
 /**
@@ -17,9 +18,21 @@ public class PanelReportesVentas extends javax.swing.JPanel {
      */
     public PanelReportesVentas() {
         initComponents();
+         ControladorReportesVentas controlador = new ControladorReportesVentas();
+      btnVentasRango.addActionListener(e -> {
+          controlador.generarReporteVentasDiaCSV();
+      });
+      
+      btnVentasMensuales.addActionListener(e -> {
+          controlador.generarReporteVentasMensuales();   
+      });
         
-        JSpinner.DateEditor editorInicio = new JSpinner.DateEditor(spinnerFechaInicio, "yyyy-MM-dd");
-        
+      
+      btnMejoresClientes.addActionListener(e -> {
+      
+        controlador.generarReporteVentasMensuales();
+      
+      });
         
         
         //925 700
@@ -38,21 +51,29 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        spinnerFechaInicio = new javax.swing.JSpinner();
-        spinnerFechaFinal = new javax.swing.JSpinner();
         jLabel13 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnVentasRango = new javax.swing.JButton();
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
+        datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnVentasMensuales = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btnMejoresClientes = new javax.swing.JButton();
+        jSpinner1 = new javax.swing.JSpinner();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        btnProductosVendidos = new javax.swing.JButton();
+        jSpinner2 = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
         titulo1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -71,111 +92,127 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 130, 30));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 130, 30));
 
-        jLabel10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Ventas del Día");
+        jLabel10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 130, 20));
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 290, 110));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 290, 170));
 
         jPanel2.setBackground(new java.awt.Color(75, 128, 146));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        spinnerFechaInicio.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        jPanel2.add(spinnerFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 55, 109, -1));
-
-        spinnerFechaFinal.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        jPanel2.add(spinnerFechaFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 89, 109, -1));
 
         jLabel13.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Ventas por Rango de Fechas");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 210, 20));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 210, 20));
 
         jLabel15.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel15.setText("Fecha Inicio:");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 53, 100, 20));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 100, 20));
 
         jLabel16.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel16.setText("Fecha Final:");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 87, 100, 20));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 100, 20));
 
-        jButton2.setText("Generar Reporte");
-        jButton2.setBackground(new java.awt.Color(28, 95, 118));
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 130, 30));
+        btnVentasRango.setText("Generar Reporte");
+        btnVentasRango.setBackground(new java.awt.Color(28, 95, 118));
+        btnVentasRango.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnVentasRango.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnVentasRango.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(btnVentasRango, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 130, 30));
+        jPanel2.add(datePicker1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 190, -1));
+        jPanel2.add(datePicker2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 190, -1));
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 410, 289, 170));
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 440, 350, 190));
 
         jPanel3.setBackground(new java.awt.Color(75, 128, 146));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel14.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Ventas Mensuales");
-        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 130, 20));
+        jLabel14.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 130, 20));
 
-        jButton3.setText("Generar Reporte");
-        jButton3.setBackground(new java.awt.Color(28, 95, 118));
-        jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 130, 30));
+        btnVentasMensuales.setText("Generar Reporte");
+        btnVentasMensuales.setBackground(new java.awt.Color(28, 95, 118));
+        btnVentasMensuales.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnVentasMensuales.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnVentasMensuales.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel3.add(btnVentasMensuales, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 130, 30));
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 290, 110));
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 290, 160));
 
         jPanel4.setBackground(new java.awt.Color(75, 128, 146));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel11.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Mejores Clientes");
-        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 130, 20));
+        jLabel11.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 130, 20));
 
-        jButton4.setText("Generar Reporte");
-        jButton4.setBackground(new java.awt.Color(28, 95, 118));
-        jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 130, 30));
+        btnMejoresClientes.setText("Generar Reporte");
+        btnMejoresClientes.setBackground(new java.awt.Color(28, 95, 118));
+        btnMejoresClientes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnMejoresClientes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnMejoresClientes.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel4.add(btnMejoresClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 130, 30));
+        jPanel4.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
-        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 290, 110));
+        jRadioButton1.setText("Por monto ");
+        jPanel4.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
+
+        jRadioButton2.setText("Por Costo");
+        jPanel4.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+
+        jLabel1.setText("Top:");
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
+
+        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 290, 170));
 
         jPanel5.setBackground(new java.awt.Color(75, 128, 146));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel12.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Productos más Vendidos");
-        jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 190, 20));
+        jLabel12.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 190, 20));
 
-        jButton5.setText("Generar Reporte");
-        jButton5.setBackground(new java.awt.Color(28, 95, 118));
-        jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel5.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 130, 30));
+        btnProductosVendidos.setText("Generar Reporte");
+        btnProductosVendidos.setBackground(new java.awt.Color(28, 95, 118));
+        btnProductosVendidos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnProductosVendidos.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnProductosVendidos.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel5.add(btnProductosVendidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 130, 30));
+        jPanel5.add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
-        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 290, 290, 110));
+        jLabel2.setText("Top:");
+        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
-        titulo1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
-        titulo1.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButton3.setText("Por cantidad");
+        jPanel5.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, -1, -1));
+
+        jRadioButton4.setText("Por Monto");
+        jPanel5.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+
+        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 240, 290, 160));
+
         titulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titulo1.setText("GENERAR REPORTES");
-        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 850, -1));
+        titulo1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
+        titulo1.setForeground(new java.awt.Color(255, 255, 255));
+        add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, -1));
 
         btnSalir.setBackground(new java.awt.Color(75, 128, 146));
         btnSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -186,28 +223,28 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         });
         btnSalir.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel9.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("X");
         jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel9.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 30, 30));
 
         add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 30, 30));
 
-        marcaAgua.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        marcaAgua.setForeground(new java.awt.Color(255, 255, 255));
         marcaAgua.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         marcaAgua.setText("FARMACIA");
-        add(marcaAgua, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 850, -1));
+        marcaAgua.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        marcaAgua.setForeground(new java.awt.Color(255, 255, 255));
+        add(marcaAgua, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 850, -1));
 
         separador2.setBackground(new java.awt.Color(255, 255, 255));
         separador2.setForeground(new java.awt.Color(255, 255, 255));
-        add(separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 850, -1));
+        add(separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 650, 850, 10));
 
         separador.setBackground(new java.awt.Color(255, 255, 255));
         separador.setForeground(new java.awt.Color(255, 255, 255));
-        add(separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 850, -1));
+        add(separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 640, 850, 10));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
@@ -216,12 +253,15 @@ public class PanelReportesVentas extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMejoresClientes;
+    private javax.swing.JButton btnProductosVendidos;
     private javax.swing.JPanel btnSalir;
+    private javax.swing.JButton btnVentasMensuales;
+    private javax.swing.JButton btnVentasRango;
+    private com.github.lgooddatepicker.components.DatePicker datePicker1;
+    private com.github.lgooddatepicker.components.DatePicker datePicker2;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -229,17 +269,22 @@ public class PanelReportesVentas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinner2;
     private javax.swing.JLabel marcaAgua;
     private javax.swing.JSeparator separador;
     private javax.swing.JSeparator separador2;
-    private javax.swing.JSpinner spinnerFechaFinal;
-    private javax.swing.JSpinner spinnerFechaInicio;
     private javax.swing.JLabel titulo1;
     // End of variables declaration//GEN-END:variables
 }
