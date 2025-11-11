@@ -12,12 +12,12 @@ import javax.swing.DefaultComboBoxModel;
  * @author jhosu
  */
 public interface IRegistroUsuario {
+    boolean guardarUsuario(ModeloRegistroUsuario modelo);
+    javax.swing.DefaultComboBoxModel mostrarTiposUsuarios();
+    boolean elimiarUsuario(String nombreU);
+    ModeloRegistroUsuario validarUsuario(String nombreU, String contraU);
 
-    public boolean guardarUsuario(ModeloRegistroUsuario modelo);
-
-    public DefaultComboBoxModel mostrarTiposUsuarios();
-
-    public boolean elimiarUsuario(String nombreU);
-
-    public ModeloRegistroUsuario validarUsuario(String nombreU, String contraU);
+    // 👉 NUEVO:
+    ModeloRegistroUsuario buscarUsuarioPorIdONombre(String idUsuario, String usuario);
 }
+

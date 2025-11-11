@@ -19,15 +19,110 @@ public class PanelRegistroUsuario extends javax.swing.JPanel {
     public PanelRegistroUsuario() {
         initComponents();
 
+        // No borres este cableado
         ModeloRegistroUsuario modelo = new ModeloRegistroUsuario(this);
         ControladorRegistroUsuario controlador = new ControladorRegistroUsuario(modelo);
+        setControlador(controlador);
 
-        btnBorrar.setVisible(false);
+        // Mostrar/ocultar lo tuyo
+        btnBorrar.setVisible(true);
         labelFechaRegistro.setVisible(false);
         txtFechaCreacion.setVisible(false);
-        setControlador(controlador);
-    }
 
+        // traer al frente por si hay solapes
+        btnBorrar.getParent().setComponentZOrder(btnBorrar, 0);
+        btnBorrar.revalidate();
+        btnBorrar.repaint();
+
+        // ─────────────────────────────────────────────
+        //  BOTÓN "ACTUALIZAR" DINÁMICO (JPanel + JLabel)
+        // ─────────────────────────────────────────────
+        final java.awt.Color ACT_BASE = new java.awt.Color(70, 130, 180);  // azul visible desde el inicio
+        final java.awt.Color ACT_HOVER = new java.awt.Color(60, 115, 160);
+
+        javax.swing.JPanel btnActualizar = new javax.swing.JPanel(new java.awt.BorderLayout());
+        btnActualizar.setName("btnActualizar");
+        btnActualizar.setOpaque(true);
+        btnActualizar.setBackground(ACT_BASE);
+        btnActualizar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255, 80)));
+        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        javax.swing.JLabel lblActualizar = new javax.swing.JLabel("Actualizar", javax.swing.SwingConstants.CENTER);
+        lblActualizar.setName("lblActualizar");
+        lblActualizar.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+        lblActualizar.setForeground(java.awt.Color.WHITE);
+        lblActualizar.setOpaque(false);
+
+        btnActualizar.add(lblActualizar, java.awt.BorderLayout.CENTER);
+        this.add(btnActualizar); // agregar antes de posicionar para que tenga parent
+
+        // ─────────────────────────────────────────────
+        // Posicionar respecto a "Borrar": a la DERECHA si cabe; si no, a la IZQUIERDA
+        // ─────────────────────────────────────────────
+        Runnable place = () -> {
+            // contenedor donde están los botones
+            java.awt.Container parent = btnBorrar.getParent();
+            int parentW = parent != null ? parent.getWidth() : this.getWidth();
+
+            // medidas base tomando "Borrar" como referencia
+            int bw = (btnBorrar.getWidth() > 0) ? btnBorrar.getWidth() : 110;
+            int bh = (btnBorrar.getHeight() > 0) ? btnBorrar.getHeight() : 30;
+            int bx = (btnBorrar.getX() > 0) ? btnBorrar.getX() : 500;
+            int by = (btnBorrar.getY() > 0) ? btnBorrar.getY() : 550;
+
+            int gapX = 16;      // separación horizontal
+            int offsetY = 0;    // ajuste vertical si lo quieres más abajo/arriba
+
+            // propuesta: a la DERECHA de "Borrar"
+            int ax = bx + bw + gapX;
+            int ay = by + offsetY;
+
+            // CLAMP: si se sale por la derecha, lo pasamos a la IZQUIERDA;
+            // si aun así se sale por la izquierda, lo pegamos a 16 px del borde.
+            if (parentW > 0) {
+                if (ax + bw > parentW - 16) {
+                    ax = bx - (bw + gapX); // a la izquierda
+                    if (ax < 16) {
+                        ax = 16;  // margen mínimo
+                    }
+                }
+            }
+
+            // aplicar bounds y forzar visibilidad
+            btnActualizar.setBounds(ax, ay, bw, bh);
+            btnActualizar.setVisible(true);
+
+            // traer al frente por si otro componente lo tapa
+            if (btnActualizar.getParent() != null) {
+                btnActualizar.getParent().setComponentZOrder(btnActualizar, 0);
+            }
+
+            this.revalidate();
+            this.repaint();
+        };
+
+        // Colocar cuando haya layout/tamaño real
+        javax.swing.SwingUtilities.invokeLater(place);
+        this.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentShown(java.awt.event.ComponentEvent e) {
+                place.run();
+            }
+
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                place.run();
+            }
+        });
+
+        // Registrar listeners con tu controlador (click y hover)
+        btnActualizar.addMouseListener(controlador);
+        lblActualizar.addMouseListener(controlador);
+
+        // refrescar final
+        this.revalidate();
+        this.repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -405,10 +500,15 @@ public class PanelRegistroUsuario extends javax.swing.JPanel {
     public javax.swing.JPasswordField txtPassword;
     public javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
-
-    public void setControlador(ControladorRegistroUsuario controlador) {
+   public void setControlador(ControladorRegistroUsuario controlador) {
         btnRegistrar.addMouseListener(controlador);
+        registrar.addMouseListener(controlador);   // ← añade esto
         btnBorrar.addMouseListener(controlador);
         btnBuscar.addMouseListener(controlador);
     }
+
+    public javax.swing.JLabel getRegistrarLabel() {
+        return registrar;
+    }
+
 }
