@@ -6,11 +6,15 @@ import Implementacion.ProductoImp;
 import Modelo.ModeloProducto;
 import Modelo.ModeloVistaInicio;
 import Vistas.PanelProducto;
+import Vistas.PanelReporteProductos;
+import java.awt.Dialog;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 
 public class ControladorProducto implements MouseListener {
@@ -176,8 +180,9 @@ public class ControladorProducto implements MouseListener {
             return;
         }
         if (src == vista.btnReporte) {
-            return;
-        }
+                abrirReporteProductos(); 
+                return;
+            }
     }
 
     public void agregarProducto() {
@@ -307,6 +312,32 @@ public class ControladorProducto implements MouseListener {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(vista, "Error al buscar: " + ex.getMessage());
         }
+    }
+    private void abrirReporteProductos() {
+        
+        PanelReporteProductos pnl = new PanelReporteProductos();
+        ControladorReporteProductos ctrl = new ControladorReporteProductos(pnl);
+
+        
+        pnl.btnmasvendido.addMouseListener(ctrl);
+        pnl.btnStockBajo.addMouseListener(ctrl);
+        pnl.btnexportar.addMouseListener(ctrl);
+
+        
+        java.awt.Window owner = SwingUtilities.getWindowAncestor(vista);
+        JDialog dlg = new JDialog(owner, "Reporte de productos", Dialog.ModalityType.APPLICATION_MODAL);
+        dlg.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        dlg.setContentPane(pnl);
+        dlg.pack();
+        dlg.setLocationRelativeTo(vista);
+
+       
+        dlg.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override public void windowClosing(java.awt.event.WindowEvent e) { ctrl.cerrar(); }
+            @Override public void windowClosed (java.awt.event.WindowEvent e) { ctrl.cerrar(); }
+        });
+
+        dlg.setVisible(true);
     }
 
     @Override public void mousePressed(MouseEvent e) {}
