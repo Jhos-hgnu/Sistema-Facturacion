@@ -8,13 +8,13 @@ import Controlador.ControladorReportes;
 import Modelo.ModeloReporte;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
+import Vistas.PanelCompras;
 /**
  *
  * @author jhosu
  */
 public class VistaReportes extends javax.swing.JFrame {
-    
+
     private ControladorReportes controlador;
 
     /**
@@ -23,8 +23,8 @@ public class VistaReportes extends javax.swing.JFrame {
     public VistaReportes() {
         initComponents();
         setLocationRelativeTo(null);
-        
-       ModeloReporte modelo = new ModeloReporte();
+
+        ModeloReporte modelo = new ModeloReporte();
         this.controlador = new ControladorReportes(modelo, this);
 
     }
@@ -33,11 +33,11 @@ public class VistaReportes extends javax.swing.JFrame {
     public JButton getBtnVolver() {
         return btnVolver;
     }
-    
+
     public JButton getBtnFinanciero() {
         return btnFinanciero;
     }
-    
+
     public JButton getBtnInventario() {
         return btnInventario;
     }
@@ -45,12 +45,11 @@ public class VistaReportes extends javax.swing.JFrame {
     public JButton getBtnCompras() {
         return btnCompras;
     }
-    
+
     public JButton getBtnVentas() {
         return btnVentas;
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,92 +61,95 @@ public class VistaReportes extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        marcaAgua = new javax.swing.JLabel();
         btnFinanciero = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
         btnCompras = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
+        marcaAgua1 = new javax.swing.JLabel();
+        imagen = new javax.swing.JLabel();
+        bienvenida = new javax.swing.JLabel();
+        userCajero = new javax.swing.JLabel();
+        separador = new javax.swing.JSeparator();
         pnlFondoReportes = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(28, 95, 118));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(23, 75, 93));
-
-        marcaAgua.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        marcaAgua.setForeground(new java.awt.Color(255, 255, 255));
-        marcaAgua.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        marcaAgua.setText("REPORTES");
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnFinanciero.setBackground(new java.awt.Color(75, 128, 146));
-        btnFinanciero.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnFinanciero.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         btnFinanciero.setForeground(new java.awt.Color(255, 255, 255));
         btnFinanciero.setText("Financiero");
+        btnFinanciero.setBorder(null);
+        jPanel2.add(btnFinanciero, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 210, 30));
 
         btnVolver.setBackground(new java.awt.Color(75, 128, 146));
-        btnVolver.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnVolver.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         btnVolver.setForeground(new java.awt.Color(255, 255, 255));
         btnVolver.setText("Volver");
+        btnVolver.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 650, 110, 30));
 
         btnInventario.setBackground(new java.awt.Color(75, 128, 146));
-        btnInventario.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnInventario.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         btnInventario.setForeground(new java.awt.Color(255, 255, 255));
         btnInventario.setText("Inventario");
+        btnInventario.setBorder(null);
+        jPanel2.add(btnInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, 210, 30));
 
         btnCompras.setBackground(new java.awt.Color(75, 128, 146));
-        btnCompras.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnCompras.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         btnCompras.setForeground(new java.awt.Color(255, 255, 255));
         btnCompras.setText("Compras");
         btnCompras.setToolTipText("");
+        btnCompras.setBorder(null);
         btnCompras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnComprasActionPerformed(evt);
             }
         });
+        jPanel2.add(btnCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 210, 30));
 
         btnVentas.setBackground(new java.awt.Color(75, 128, 146));
-        btnVentas.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 18)); // NOI18N
+        btnVentas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         btnVentas.setForeground(new java.awt.Color(255, 255, 255));
         btnVentas.setText("Ventas");
+        btnVentas.setBorder(null);
+        jPanel2.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 210, 30));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(marcaAgua, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnFinanciero, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnInventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCompras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(marcaAgua)
-                .addGap(86, 86, 86)
-                .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(btnCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(btnFinanciero, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-        );
+        marcaAgua1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        marcaAgua1.setForeground(new java.awt.Color(255, 255, 255));
+        marcaAgua1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        marcaAgua1.setText("FARMACIA");
+        jPanel2.add(marcaAgua1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 350, -1));
+
+        imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Pill Green MT 3 150x150.png"))); // NOI18N
+        jPanel2.add(imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, -1));
+
+        bienvenida.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        bienvenida.setForeground(new java.awt.Color(255, 255, 255));
+        bienvenida.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bienvenida.setText("Bienvenido");
+        jPanel2.add(bienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 350, -1));
+
+        userCajero.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        userCajero.setForeground(new java.awt.Color(255, 255, 255));
+        userCajero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userCajero.setText("REPORTES");
+        jPanel2.add(userCajero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 350, 40));
+
+        separador.setBackground(new java.awt.Color(255, 255, 255));
+        separador.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 310, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 700));
 
         pnlFondoReportes.setBackground(new java.awt.Color(28, 95, 118));
 
@@ -155,44 +157,32 @@ public class VistaReportes extends javax.swing.JFrame {
         pnlFondoReportes.setLayout(pnlFondoReportesLayout);
         pnlFondoReportesLayout.setHorizontalGroup(
             pnlFondoReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 925, Short.MAX_VALUE)
+            .addGap(0, 860, Short.MAX_VALUE)
         );
         pnlFondoReportesLayout.setVerticalGroup(
             pnlFondoReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlFondoReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlFondoReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jPanel1.add(pnlFondoReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 860, 700));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
-        // TODO add your handling code here:
+        pnlFondoReportes.removeAll();
+
+        PanelCompras panelCompras = new PanelCompras();
+
+        panelCompras.setSize(pnlFondoReportes.getSize());
+        panelCompras.setLocation(0, 0);
+
+        pnlFondoReportes.add(panelCompras);
+
+        pnlFondoReportes.revalidate();
+        pnlFondoReportes.repaint();
     }//GEN-LAST:event_btnComprasActionPerformed
 
     /**
@@ -231,14 +221,18 @@ public class VistaReportes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bienvenida;
     private javax.swing.JButton btnCompras;
     private javax.swing.JButton btnFinanciero;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnVentas;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JLabel imagen;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel marcaAgua;
+    private javax.swing.JLabel marcaAgua1;
     public javax.swing.JPanel pnlFondoReportes;
+    private javax.swing.JSeparator separador;
+    private javax.swing.JLabel userCajero;
     // End of variables declaration//GEN-END:variables
 }
