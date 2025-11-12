@@ -5,10 +5,12 @@
 package Controlador;
 
 import Implementacion.DetalleVentasDAO;
+import Implementacion.InventarioDAO;
 import Implementacion.VentasDAO;
 import Modelo.ModeloClientesVentas;
 import Modelo.ModeloDetalleVenta;
 import Modelo.ModeloInicioUsuario;
+import Modelo.ModeloInventario;
 import Modelo.ModeloProducto;
 import Modelo.ModeloRegistroCliente;
 import Modelo.ModeloVenta;
@@ -18,6 +20,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.time.LocalDate;
@@ -68,6 +71,130 @@ public class ControladorVentas {
                 buscarVentaPorId();
             }
         });
+        vista.btnActualizar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                actualizarVenta();
+            }
+        });
+        // Evento del botón eliminar
+        this.vista.btnEliminarVenta.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                eliminarVenta();
+            }
+        });
+    }
+
+    // ====================================================
+    // ELIMINAR VENTA
+    // ====================================================
+    private void eliminarVenta() {
+        try {
+            String idTexto = vista.txtIdVenta.getText().trim();
+
+            if (idTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(vista, "⚠️ Ingresa el ID de la venta a eliminar.");
+                return;
+            }
+
+            long idVenta = Long.parseLong(idTexto);
+
+            int confirm = JOptionPane.showConfirmDialog(vista,
+                    "¿Seguro que deseas eliminar la venta con ID " + idVenta + " y todos sus detalles?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirm != JOptionPane.YES_OPTION) {
+                return;
+            }
+
+            // =============================
+            // 1️⃣ Buscar detalles de la venta
+            // =============================
+            List<ModeloDetalleVenta> detalles = daoDetalle.listarPorIdVenta(idVenta);
+
+            // =============================
+            // 2️⃣ Eliminar cada detalle y restaurar stock
+            // =============================
+            InventarioDAO inventarioDAO = new InventarioDAO();
+            boolean errorEnDetalles = false;
+
+            for (ModeloDetalleVenta detalle : detalles) {
+                long idProducto = detalle.getIdProducto();
+                int cantidad = detalle.getCantidad();
+
+                // Recuperar stock actual
+                int stockActual = inventarioDAO.obtenerStockActual(idProducto);
+                int nuevoStock = stockActual + cantidad;
+
+                // Registrar el movimiento de "entrada" (devolución al inventario)
+                ModeloInventario movimiento = new ModeloInventario();
+                movimiento.setIdProducto(idProducto);
+                movimiento.setCantidad(cantidad);
+                movimiento.setStockAnterior(stockActual);
+                movimiento.setStockActual(nuevoStock);
+                movimiento.setMovimiento("ENTRADA");
+                movimiento.setMotivo("Eliminación de venta ID " + idVenta);
+                movimiento.setIdUsuario(1);
+                movimiento.setFecha(new java.util.Date());
+
+                boolean movOk = inventarioDAO.insertarInventario(movimiento);
+
+                if (!movOk) {
+                    System.err.println("⚠️ No se registró movimiento de inventario para producto ID " + idProducto);
+                    errorEnDetalles = true;
+                }
+
+                // Eliminar el detalle
+                daoDetalle.eliminarDetalleVenta(detalle.getIdDetalleVenta());
+            }
+
+            // =============================
+            // 3️⃣ Eliminar la venta principal
+            // =============================
+            boolean eliminado = dao.eliminarVenta(idVenta);
+
+            if (eliminado) {
+                String msg = "🗑️ Venta y detalles eliminados correctamente.";
+                if (errorEnDetalles) {
+                    msg += "\n⚠️ Algunos movimientos de inventario no se registraron correctamente.";
+                }
+                JOptionPane.showMessageDialog(vista, msg);
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(vista, "⚠️ No se pudo eliminar la venta.");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(vista, "❌ Error al eliminar en cascada: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    public void actualizarVenta() {
+        try {
+            ModeloVenta venta = new ModeloVenta();
+            venta.setIdVenta(Long.parseLong(vista.txtIdVenta.getText()));
+            venta.setNit(vista.txtNIT.getText());
+            venta.setFecha(new java.util.Date()); // o la fecha del campo
+            venta.setTipoPago(vista.cmbMetodoPago.getSelectedItem().toString());
+            venta.setDocumento(vista.txtDocumento.getText());
+            venta.setTotal(Double.parseDouble(vista.txtTotal.getText()));
+            venta.setIdUsuario(1); // o el usuario actual
+            venta.setObservacion(vista.txtObservaciones.getText());
+
+            boolean actualizado = dao.actualizarVenta(venta);
+
+            if (actualizado) {
+                JOptionPane.showMessageDialog(vista, "✅ Venta actualizada correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(vista, "⚠️ No se pudo actualizar la venta.");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(vista, "❌ Error al actualizar: " + ex.getMessage());
+        }
     }
 
     // ====================================================

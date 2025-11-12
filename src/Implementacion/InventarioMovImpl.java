@@ -18,8 +18,6 @@ import java.sql.*;
  * @author anyi4
  */
 
-
-
 public class InventarioMovImpl implements IInventarioMov {
 
     public List<ModeloItem> listarProductos() { return listarProductos(null); }

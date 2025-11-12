@@ -6,6 +6,7 @@ package Implementacion;
 
 import Modelo.ModeloVenta;
 import Conector.DBConnection;
+import Modelo.ModeloDetalleVenta;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -167,18 +168,26 @@ public class VentasDAO {
         conector.conectar();
 
         try {
+            // 🔹 1. Eliminar los detalles de esa venta primero
+            DetalleVentasDAO detalleDAO = new DetalleVentasDAO();
+            List<ModeloDetalleVenta> detalles = detalleDAO.listarPorIdVenta(idVenta);
+            for (ModeloDetalleVenta detalle : detalles) {
+                detalleDAO.eliminarDetalleVenta(detalle.getIdDetalleVenta());
+            }
+
+            // 🔹 2. Luego eliminar la venta principal
             String sql = "DELETE FROM venta WHERE id_venta = ?";
             ps = conector.preparar(sql);
             ps.setLong(1, idVenta);
-
             resultado = ps.executeUpdate() > 0;
 
             if (resultado) {
-                System.out.println("🗑️ Venta eliminada correctamente: ID " + idVenta);
+                System.out.println("🗑️ Venta y detalles eliminados correctamente: ID " + idVenta);
             }
 
         } catch (SQLException e) {
-            Logger.getLogger(VentasDAO.class.getName()).log(Level.SEVERE, "❌ Error al eliminar venta", e);
+            Logger.getLogger(VentasDAO.class.getName())
+                    .log(Level.SEVERE, "❌ Error al eliminar venta en cascada", e);
         } finally {
             cerrarRecursos();
         }
@@ -215,5 +224,5 @@ public class VentasDAO {
             Logger.getLogger(VentasDAO.class.getName()).log(Level.WARNING, "⚠️ Error al cerrar recursos", e);
         }
     }
-    
+
 }
