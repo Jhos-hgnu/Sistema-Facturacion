@@ -26,7 +26,4 @@ public class proyecto_farmacia {
 //frame.setVisible(true);
    
     }
-   
-   
-    
 }
