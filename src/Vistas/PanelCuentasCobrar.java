@@ -142,85 +142,85 @@ public class PanelCuentasCobrar extends javax.swing.JPanel {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("ID Venta:");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 130, -1));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 130, -1));
 
         jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("ID Cuenta por Cobrar:");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 160, -1));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 160, -1));
 
         jLabel10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Fecha de Emisión:");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 130, -1));
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 310, 130, -1));
 
         jLabel11.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("Fecha de Vencimiento:");
-        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 180, -1));
+        add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 180, -1));
 
         jLabel12.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("Monto:");
-        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 130, -1));
+        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, 60, -1));
 
         jLabel13.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel13.setText("Saldo:");
-        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 130, -1));
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, 50, -1));
 
         jLabel14.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel14.setText("Estado:");
-        add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, 130, -1));
+        add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 410, 130, -1));
 
         txtIdVenta.setBackground(new java.awt.Color(75, 128, 146));
         txtIdVenta.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         txtIdVenta.setForeground(new java.awt.Color(255, 255, 255));
         txtIdVenta.setCaretColor(new java.awt.Color(255, 255, 255));
-        add(txtIdVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 280, -1));
+        add(txtIdVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, 240, -1));
 
         txtEstado.setBackground(new java.awt.Color(75, 128, 146));
         txtEstado.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         txtEstado.setForeground(new java.awt.Color(255, 255, 255));
         txtEstado.setCaretColor(new java.awt.Color(255, 255, 255));
-        add(txtEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 420, 280, -1));
+        add(txtEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 410, 250, -1));
 
         txtIdCuentaCobro.setBackground(new java.awt.Color(75, 128, 146));
         txtIdCuentaCobro.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         txtIdCuentaCobro.setForeground(new java.awt.Color(255, 255, 255));
         txtIdCuentaCobro.setCaretColor(new java.awt.Color(255, 255, 255));
-        add(txtIdCuentaCobro, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 280, -1));
+        add(txtIdCuentaCobro, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 240, -1));
 
         txtFechaEmision.setBackground(new java.awt.Color(75, 128, 146));
         txtFechaEmision.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         txtFechaEmision.setForeground(new java.awt.Color(255, 255, 255));
         txtFechaEmision.setCaretColor(new java.awt.Color(255, 255, 255));
-        add(txtFechaEmision, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, 280, -1));
+        add(txtFechaEmision, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 160, -1));
 
         txtFechaVencimiento.setBackground(new java.awt.Color(75, 128, 146));
         txtFechaVencimiento.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         txtFechaVencimiento.setForeground(new java.awt.Color(255, 255, 255));
         txtFechaVencimiento.setCaretColor(new java.awt.Color(255, 255, 255));
-        add(txtFechaVencimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 280, -1));
+        add(txtFechaVencimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 350, 160, -1));
 
         txtMonto.setBackground(new java.awt.Color(75, 128, 146));
         txtMonto.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         txtMonto.setForeground(new java.awt.Color(255, 255, 255));
         txtMonto.setCaretColor(new java.awt.Color(255, 255, 255));
-        add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 280, -1));
+        add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 310, 140, -1));
 
         txtSaldo.setBackground(new java.awt.Color(75, 128, 146));
         txtSaldo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         txtSaldo.setForeground(new java.awt.Color(255, 255, 255));
         txtSaldo.setCaretColor(new java.awt.Color(255, 255, 255));
-        add(txtSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 380, 280, -1));
+        add(txtSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 350, 140, -1));
 
         btnBuscar.setBackground(new java.awt.Color(75, 128, 146));
         btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -231,9 +231,9 @@ public class PanelCuentasCobrar extends javax.swing.JPanel {
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Buscar");
-        btnBuscar.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        btnBuscar.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
 
-        add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 270, 90, 30));
+        add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 250, 100, 30));
 
         btnCobrar.setBackground(new java.awt.Color(75, 128, 146));
         btnCobrar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -244,9 +244,9 @@ public class PanelCuentasCobrar extends javax.swing.JPanel {
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Cobrar");
-        btnCobrar.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        btnCobrar.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 510, 90, 30));
+        add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 110, 30));
 
         btnEliminar.setBackground(new java.awt.Color(75, 128, 146));
         btnEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -257,9 +257,9 @@ public class PanelCuentasCobrar extends javax.swing.JPanel {
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Eliminar");
-        btnEliminar.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        btnEliminar.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 510, 90, 30));
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 470, 110, 30));
 
         btnAgregar.setBackground(new java.awt.Color(75, 128, 146));
         btnAgregar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -270,9 +270,9 @@ public class PanelCuentasCobrar extends javax.swing.JPanel {
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Agregar");
-        btnAgregar.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        btnAgregar.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 510, 90, 30));
+        add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, 110, 30));
 
         titulo1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         titulo1.setForeground(new java.awt.Color(255, 255, 255));
