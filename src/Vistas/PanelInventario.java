@@ -103,35 +103,35 @@ public class PanelInventario extends javax.swing.JPanel {
         IDCliente1.setForeground(new java.awt.Color(255, 255, 255));
         IDCliente1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         IDCliente1.setText("Stock Actual:");
-        add(IDCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 100, -1));
+        add(IDCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, 100, -1));
 
         IDCliente3.setBackground(new java.awt.Color(255, 255, 255));
         IDCliente3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         IDCliente3.setForeground(new java.awt.Color(255, 255, 255));
         IDCliente3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         IDCliente3.setText("ID Inventario:");
-        add(IDCliente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 100, -1));
+        add(IDCliente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 100, -1));
 
         IDCliente4.setBackground(new java.awt.Color(255, 255, 255));
         IDCliente4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         IDCliente4.setForeground(new java.awt.Color(255, 255, 255));
         IDCliente4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         IDCliente4.setText("ID Producto:");
-        add(IDCliente4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, 100, -1));
+        add(IDCliente4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 100, -1));
 
         IDCliente5.setBackground(new java.awt.Color(255, 255, 255));
         IDCliente5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         IDCliente5.setForeground(new java.awt.Color(255, 255, 255));
         IDCliente5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         IDCliente5.setText("Cantidad:");
-        add(IDCliente5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 80, -1));
+        add(IDCliente5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 270, 80, -1));
 
         IDCliente7.setBackground(new java.awt.Color(255, 255, 255));
         IDCliente7.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         IDCliente7.setForeground(new java.awt.Color(255, 255, 255));
         IDCliente7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         IDCliente7.setText("Movimiento:");
-        add(IDCliente7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 140, -1));
+        add(IDCliente7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 140, -1));
 
         txtStockActual.setBackground(new java.awt.Color(75, 128, 146));
         txtStockActual.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -143,7 +143,7 @@ public class PanelInventario extends javax.swing.JPanel {
                 txtStockActualActionPerformed(evt);
             }
         });
-        add(txtStockActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, 140, -1));
+        add(txtStockActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 310, 140, -1));
 
         txtIdInventario.setBackground(new java.awt.Color(75, 128, 146));
         txtIdInventario.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -155,7 +155,7 @@ public class PanelInventario extends javax.swing.JPanel {
                 txtIdInventarioActionPerformed(evt);
             }
         });
-        add(txtIdInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, 140, -1));
+        add(txtIdInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 140, -1));
 
         txtIdProducto.setBackground(new java.awt.Color(75, 128, 146));
         txtIdProducto.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -167,7 +167,7 @@ public class PanelInventario extends javax.swing.JPanel {
                 txtIdProductoActionPerformed(evt);
             }
         });
-        add(txtIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 230, 140, -1));
+        add(txtIdProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 220, 140, -1));
 
         txtCantidad.setBackground(new java.awt.Color(75, 128, 146));
         txtCantidad.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -179,7 +179,7 @@ public class PanelInventario extends javax.swing.JPanel {
                 txtCantidadActionPerformed(evt);
             }
         });
-        add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 410, -1));
+        add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 410, -1));
 
         txtMovimiento.setBackground(new java.awt.Color(75, 128, 146));
         txtMovimiento.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -191,7 +191,7 @@ public class PanelInventario extends javax.swing.JPanel {
                 txtMovimientoActionPerformed(evt);
             }
         });
-        add(txtMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 360, 410, -1));
+        add(txtMovimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 350, 410, -1));
 
         btnAgregar.setBackground(new java.awt.Color(75, 128, 146));
         btnAgregar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -204,7 +204,7 @@ public class PanelInventario extends javax.swing.JPanel {
         agregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAgregar.add(agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
 
-        add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 490, 90, 30));
+        add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 90, 30));
 
         btnActualizar.setBackground(new java.awt.Color(75, 128, 146));
         btnActualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -217,7 +217,7 @@ public class PanelInventario extends javax.swing.JPanel {
         actualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizar.add(actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 30));
 
-        add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 490, 90, 30));
+        add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 480, 90, 30));
 
         btnEliminar.setBackground(new java.awt.Color(75, 128, 146));
         btnEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -230,14 +230,14 @@ public class PanelInventario extends javax.swing.JPanel {
         eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminar.add(eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 50, 30));
 
-        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 490, 90, 30));
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 480, 90, 30));
 
         IDCliente8.setBackground(new java.awt.Color(255, 255, 255));
         IDCliente8.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         IDCliente8.setForeground(new java.awt.Color(255, 255, 255));
         IDCliente8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         IDCliente8.setText("Stock Anterior:");
-        add(IDCliente8, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, 140, -1));
+        add(IDCliente8, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 140, -1));
 
         txtStockAnterior.setBackground(new java.awt.Color(75, 128, 146));
         txtStockAnterior.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -249,14 +249,14 @@ public class PanelInventario extends javax.swing.JPanel {
                 txtStockAnteriorActionPerformed(evt);
             }
         });
-        add(txtStockAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 140, -1));
+        add(txtStockAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 310, 140, -1));
 
         IDCliente9.setBackground(new java.awt.Color(255, 255, 255));
         IDCliente9.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         IDCliente9.setForeground(new java.awt.Color(255, 255, 255));
         IDCliente9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         IDCliente9.setText("Motivo:");
-        add(IDCliente9, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, 140, -1));
+        add(IDCliente9, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, 140, -1));
 
         txtMotivo.setBackground(new java.awt.Color(75, 128, 146));
         txtMotivo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -268,14 +268,14 @@ public class PanelInventario extends javax.swing.JPanel {
                 txtMotivoActionPerformed(evt);
             }
         });
-        add(txtMotivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, 410, -1));
+        add(txtMotivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 410, -1));
 
         IDCliente10.setBackground(new java.awt.Color(255, 255, 255));
         IDCliente10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         IDCliente10.setForeground(new java.awt.Color(255, 255, 255));
         IDCliente10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         IDCliente10.setText("ID Usuario:");
-        add(IDCliente10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 440, 140, -1));
+        add(IDCliente10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 430, 140, -1));
 
         txtIdUsuario.setBackground(new java.awt.Color(75, 128, 146));
         txtIdUsuario.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -287,14 +287,14 @@ public class PanelInventario extends javax.swing.JPanel {
                 txtIdUsuarioActionPerformed(evt);
             }
         });
-        add(txtIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 440, 160, -1));
+        add(txtIdUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 430, 160, -1));
 
         IDCliente2.setBackground(new java.awt.Color(255, 255, 255));
         IDCliente2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         IDCliente2.setForeground(new java.awt.Color(255, 255, 255));
         IDCliente2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         IDCliente2.setText("Fecha:");
-        add(IDCliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 440, 100, -1));
+        add(IDCliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 100, -1));
 
         txtFecha.setBackground(new java.awt.Color(75, 128, 146));
         txtFecha.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -306,7 +306,7 @@ public class PanelInventario extends javax.swing.JPanel {
                 txtFechaActionPerformed(evt);
             }
         });
-        add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 440, 160, -1));
+        add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 160, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
