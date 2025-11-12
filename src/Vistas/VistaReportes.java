@@ -9,12 +9,15 @@ import Modelo.ModeloReporte;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import Vistas.PanelCompras;
+import java.awt.BorderLayout;
+
 /**
  *
  * @author jhosu
  */
 public class VistaReportes extends javax.swing.JFrame {
 
+    private PanelCompras compras;
     private ControladorReportes controlador;
 
     /**
@@ -173,14 +176,8 @@ public class VistaReportes extends javax.swing.JFrame {
 
     private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
         pnlFondoReportes.removeAll();
-
-        PanelCompras panelCompras = new PanelCompras();
-
-        panelCompras.setSize(pnlFondoReportes.getSize());
-        panelCompras.setLocation(0, 0);
-
-        pnlFondoReportes.add(panelCompras);
-
+        pnlFondoReportes.setLayout(new BorderLayout());
+        pnlFondoReportes.add(compras, BorderLayout.CENTER);
         pnlFondoReportes.revalidate();
         pnlFondoReportes.repaint();
     }//GEN-LAST:event_btnComprasActionPerformed
