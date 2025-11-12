@@ -29,6 +29,7 @@ public class VistaReportes extends javax.swing.JFrame {
         
         ModeloReporte modelo = new ModeloReporte();
         this.controlador = new ControladorReportes(modelo, this);
+        pnlFondoReportes.setLayout(new java.awt.BorderLayout());
     }
 
     //Botones de la vista
@@ -174,11 +175,13 @@ public class VistaReportes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
-        pnlFondoReportes.removeAll();
-        pnlFondoReportes.setLayout(new BorderLayout());
-        pnlFondoReportes.add(compras, BorderLayout.CENTER);
-        pnlFondoReportes.revalidate();
-        pnlFondoReportes.repaint();
+      pnlFondoReportes.removeAll();
+   
+    PanelReporteCompras panelCompras = new PanelReporteCompras();
+
+    pnlFondoReportes.add(panelCompras, java.awt.BorderLayout.CENTER);
+    pnlFondoReportes.revalidate();
+    pnlFondoReportes.repaint();
     }//GEN-LAST:event_btnComprasActionPerformed
 
     /**
