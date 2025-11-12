@@ -494,6 +494,10 @@ public class VistaAdmin extends javax.swing.JFrame {
         btnRegistroUsuarios.addMouseListener(controlador);
 //        btnComponentesProductos.addMouseListener(controlador);
         btnProveedores.addMouseListener(controlador);
+        btnClientes.addMouseListener(controlador);
+        btnAuditoria.addMouseListener(controlador);
+        btnCompras.addMouseListener(controlador);
+        btnVentas.addMouseListener(controlador);
     }
 }
 

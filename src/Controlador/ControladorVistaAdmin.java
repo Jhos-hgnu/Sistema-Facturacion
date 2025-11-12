@@ -52,6 +52,20 @@ public class ControladorVistaAdmin implements MouseListener {
 //        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnComponentesProductos)) {
 //            PanelComponentesProducto vistaComponentes = new PanelComponentesProducto();
 //            mostrarPaneles(vistaComponentes);
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnClientes)) {
+            PanelClientes panel = new PanelClientes();
+            mostrarPaneles(panel);
+            
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnAuditoria)){
+            PanelAuditoria p = new PanelAuditoria();
+            mostrarPaneles(p);
+            
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnCompras)) {
+            PanelCompras p = new PanelCompras();
+            mostrarPaneles(p);
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnVentas)){
+            PanelVentas p = new PanelVentas();
+            mostrarPaneles(p);
         }
     }
 
@@ -80,6 +94,14 @@ public class ControladorVistaAdmin implements MouseListener {
             modelo.getVistaAdmin().btnRegistroUsuarios.setBackground(new Color(50, 95, 110));
 //        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnComponentesProductos)) {
 //            modelo.getVistaAdmin().btnComponentesProductos.setBackground(new Color(50, 95, 110));
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnClientes)){
+            modelo.getVistaAdmin().btnClientes.setBackground(new Color(50, 95, 110));
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnAuditoria)) {
+            modelo.getVistaAdmin().btnAuditoria.setBackground(new Color(50, 95, 110));
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnVentas)) {
+            modelo.getVistaAdmin().btnVentas.setBackground(new Color(50, 95, 110));
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnCompras)) {
+            modelo.getVistaAdmin().btnCompras.setBackground(new Color(50, 95, 110));
         }
     }
 
@@ -103,6 +125,14 @@ public class ControladorVistaAdmin implements MouseListener {
             modelo.getVistaAdmin().btnRegistroUsuarios.setBackground(new Color(75, 128, 146));
 //        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnComponentesProductos)) {
 //            modelo.getVistaAdmin().btnComponentesProductos.setBackground(new Color(75, 128, 146));
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnClientes)){
+            modelo.getVistaAdmin().btnClientes.setBackground(new Color(75, 128, 146));
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnAuditoria)) {
+            modelo.getVistaAdmin().btnAuditoria.setBackground(new Color(75, 128, 146));
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnVentas)) {
+            modelo.getVistaAdmin().btnVentas.setBackground(new Color(75, 128, 146));
+        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnCompras)) {
+            modelo.getVistaAdmin().btnCompras.setBackground(new Color(75, 128, 146));
         }
     }
 

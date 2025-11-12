@@ -101,7 +101,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         int valor = (int) spinnerTopPMVendidos.getValue();
         LocalDate fechaInicial = dateFechaInicioPMasVend.getDate();
         LocalDate fechaFinal = dateFechaFinalPMasVen.getDate();
-
+//
         if (fechaInicial == null | fechaFinal == null | !(radBtnMontoVendidos.isSelected() | radBtncantidad.isSelected())) {
             JOptionPane.showMessageDialog(null,
                     "Debe seleccionar todos los datos",
@@ -130,7 +130,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         if (radBtnMontoVendidos.isSelected()) {
             controlador.generarReporteProductosMasVendidosCSVFechas(TipoRankingProducto.POR_MONTO, valor, fechaInicialOracle, fechaFinalOracle);
         } else {
-            controlador.generarReporteProductosMasVendidosCSVFechas(TipoRankingProducto.POR_CANTIDAD, valor,fechaInicialOracle, fechaFinalOracle);
+            controlador.generarReporteProductosMasVendidosCSVFechas(TipoRankingProducto.POR_CANTIDAD, valor, fechaInicialOracle, fechaFinalOracle);
         }
 
     }
