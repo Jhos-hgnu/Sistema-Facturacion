@@ -99,7 +99,80 @@ public class PanelCompras extends javax.swing.JPanel {
         this.cmbMetodoPago = cmbMetodoPago;
     }
     
+       public JTextField getTxtCantidad() {
+        return txtCantidad;
+    }
+
+    public void setTxtCantidad(JTextField txtCantidad) {
+        this.txtCantidad = txtCantidad;
+    }
+
+    public JTextField getTxtDescuento() {
+        return txtDescuento;
+    }
+
+    public void setTxtDescuento(JTextField txtDescuento) {
+        this.txtDescuento = txtDescuento;
+    }
+
+    public JTextField getTxtIdCompra2() {
+        return txtIdCompra;
+    }
+
+    public void setTxtIdCompra(JTextField txtIdCompra) {
+        this.txtIdCompra = txtIdCompra;
+    }
+
+    public JTextField getTxtIdDetalleCompra() {
+        return txtIdDetalleCompra;
+    }
+
+    public void setTxtIdDetalleCompra(JTextField txtIdDetalleCompra) {
+        this.txtIdDetalleCompra = txtIdDetalleCompra;
+    }
+
+    public JTextField getTxtIdProducto() {
+        return txtIdProducto;
+    }
+
+    public void setTxtIdProducto(JTextField txtIdProducto) {
+        this.txtIdProducto = txtIdProducto;
+    }
+
+    public JTextField getTxtImpuesto() {
+        return txtImpuesto;
+    }
+
+    public void setTxtImpuesto(JTextField txtImpuesto) {
+        this.txtImpuesto = txtImpuesto;
+    }
+
+    public JTextField getTxtPrecioCompra() {
+        return txtPrecioCompra;
+    }
+
+    public void setTxtPrecioCompra(JTextField txtPrecioCompra) {
+        this.txtPrecioCompra = txtPrecioCompra;
+    }
+
+    public JTextField getTxtTotal() {
+        return txtTotal;
+    }
+
+    public void setTxtTotal(JTextField txtTotal) {
+        this.txtTotal = txtTotal;
+    }
+
+ 
+    //busqueda
+    public void setTxtbusqueda(JTextField txtbusqueda) {
+        this.txtbusqueda = txtbusqueda;
+    }
     
+       public JTextField getTxtbusqueda() {
+        return txtbusqueda;
+    }
+
     
     
     //crear objeto 
@@ -571,7 +644,7 @@ public class PanelCompras extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        controlador.limpiarVista();
+        //controlador.
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
