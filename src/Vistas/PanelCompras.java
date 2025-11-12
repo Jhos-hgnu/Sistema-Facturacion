@@ -243,6 +243,9 @@ public class PanelCompras extends javax.swing.JPanel {
         IDCliente1 = new javax.swing.JLabel();
         IDCliente4 = new javax.swing.JLabel();
         IDCliente5 = new javax.swing.JLabel();
+        btnAgregar1 = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(28, 95, 118));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -629,6 +632,42 @@ public class PanelCompras extends javax.swing.JPanel {
         IDCliente5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         IDCliente5.setText("Cantidad:");
         add(IDCliente5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, 80, -1));
+
+        btnAgregar1.setBackground(new java.awt.Color(75, 128, 146));
+        btnAgregar1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnAgregar1.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregar1.setText("Agregar");
+        btnAgregar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAgregar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregar1ActionPerformed(evt);
+            }
+        });
+        add(btnAgregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, 110, 30));
+
+        btnActualizar.setBackground(new java.awt.Color(75, 128, 146));
+        btnActualizar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizar.setText("Actualizar");
+        btnActualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+        add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 350, 110, 30));
+
+        btnEliminar1.setBackground(new java.awt.Color(75, 128, 146));
+        btnEliminar1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnEliminar1.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar1.setText("Eliminar");
+        btnEliminar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEliminar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminar1ActionPerformed(evt);
+            }
+        });
+        add(btnEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 350, 110, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
@@ -695,6 +734,18 @@ public class PanelCompras extends javax.swing.JPanel {
 
     }//GEN-LAST:event_txtbusquedaActionPerformed
 
+    private void btnAgregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregar1ActionPerformed
+        controlador.agregarDetalle();
+    }//GEN-LAST:event_btnAgregar1ActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        controlador.actualizarDetalle();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar1ActionPerformed
+        controlador.eliminarDetalle();
+    }//GEN-LAST:event_btnEliminar1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IDCliente1;
@@ -706,10 +757,13 @@ public class PanelCompras extends javax.swing.JPanel {
     private javax.swing.JLabel IDCliente7;
     private javax.swing.JLabel IDCliente8;
     private javax.swing.JLabel IDCliente9;
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnActualizar1;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAgregar1;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminar1;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JPanel btnSalir;
     public javax.swing.JComboBox<String> cmbMetodoPago;
