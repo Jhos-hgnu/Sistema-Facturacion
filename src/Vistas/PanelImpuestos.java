@@ -47,8 +47,6 @@ private boolean listenersRegistrados = false;
         separador = new javax.swing.JSeparator();
         separador2 = new javax.swing.JSeparator();
         titulo = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         txtIdImpuesto = new javax.swing.JTextField();
         txtNombreImpuesto = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JPanel();
@@ -57,10 +55,12 @@ private boolean listenersRegistrados = false;
         borrar = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         txtTasa = new javax.swing.JTextField();
         btnActualizar = new javax.swing.JPanel();
         registrar1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(28, 95, 118));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -103,29 +103,17 @@ private boolean listenersRegistrados = false;
         titulo.setText("IMPUESTOS");
         add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 850, -1));
 
-        jLabel7.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("ID Impuesto:");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 160, -1));
-
-        jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel8.setText("Nombre:");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, 160, -1));
-
         txtIdImpuesto.setBackground(new java.awt.Color(75, 128, 146));
         txtIdImpuesto.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         txtIdImpuesto.setForeground(new java.awt.Color(255, 255, 255));
         txtIdImpuesto.setCaretColor(new java.awt.Color(255, 255, 255));
-        add(txtIdImpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 290, -1));
+        add(txtIdImpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, 170, -1));
 
         txtNombreImpuesto.setBackground(new java.awt.Color(75, 128, 146));
         txtNombreImpuesto.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         txtNombreImpuesto.setForeground(new java.awt.Color(255, 255, 255));
         txtNombreImpuesto.setCaretColor(new java.awt.Color(255, 255, 255));
-        add(txtNombreImpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 290, -1));
+        add(txtNombreImpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, 290, -1));
 
         btnRegistrar.setBackground(new java.awt.Color(75, 128, 146));
         btnRegistrar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -139,7 +127,7 @@ private boolean listenersRegistrados = false;
         registrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRegistrar.add(registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 100, 20));
 
-        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 430, -1, 30));
+        add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 350, -1, 30));
 
         btnBorrar.setBackground(new java.awt.Color(75, 128, 146));
         btnBorrar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -152,12 +140,12 @@ private boolean listenersRegistrados = false;
         borrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBorrar.add(borrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 30));
 
-        add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 430, -1, 30));
+        add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 390, -1, 30));
 
         btnBuscar.setBackground(new java.awt.Color(75, 128, 146));
         btnBuscar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel9.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Buscar");
@@ -167,28 +155,22 @@ private boolean listenersRegistrados = false;
         btnBuscar.setLayout(btnBuscarLayout);
         btnBuscarLayout.setHorizontalGroup(
             btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
         );
         btnBuscarLayout.setVerticalGroup(
             btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnBuscarLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnBuscarLayout.createSequentialGroup()
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 430, 110, 30));
-
-        jLabel10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Tasa:");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, 160, -1));
+        add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 310, 110, 30));
 
         txtTasa.setBackground(new java.awt.Color(75, 128, 146));
         txtTasa.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         txtTasa.setForeground(new java.awt.Color(255, 255, 255));
         txtTasa.setCaretColor(new java.awt.Color(255, 255, 255));
-        add(txtTasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 290, -1));
+        add(txtTasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, 170, -1));
 
         btnActualizar.setBackground(new java.awt.Color(75, 128, 146));
         btnActualizar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -202,7 +184,25 @@ private boolean listenersRegistrados = false;
         registrar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizar.add(registrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 100, 20));
 
-        add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, -1, 30));
+        add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 390, -1, 30));
+
+        jLabel7.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel7.setText("ID Impuesto:");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 160, -1));
+
+        jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setText("Nombre:");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 160, -1));
+
+        jLabel10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel10.setText("Tasa:");
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, 160, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
