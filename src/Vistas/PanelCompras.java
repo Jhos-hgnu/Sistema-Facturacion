@@ -23,7 +23,7 @@ public class PanelCompras extends javax.swing.JPanel {
     
     //
 
-    
+    /*/*/
     
     ////get y setters
 
