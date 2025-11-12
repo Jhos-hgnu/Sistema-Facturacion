@@ -36,9 +36,9 @@ public class ControladorVistaAdmin implements MouseListener {
             new ControladorProveedor(panel);     // ← conecta la lógica del CRUD
             mostrarPaneles(panel);               // ← muestra el panel en pantalla
 
-        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnGestionInventario)) {
-            PanelMostrarInventario vistaPanelInvent = new PanelMostrarInventario();
-            mostrarPaneles(vistaPanelInvent);
+//        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnGestionInventario)) {
+//            PanelMostrarInventario vistaPanelInvent = new PanelMostrarInventario();
+//            mostrarPaneles(vistaPanelInvent);
 
         } else if (e.getComponent().equals(modelo.getVistaAdmin().btnReportes)) {
             VistaReportes vReportes = new VistaReportes();
@@ -49,9 +49,9 @@ public class ControladorVistaAdmin implements MouseListener {
             PanelRegistroUsuario vistaPanelRegistro = new PanelRegistroUsuario();
             mostrarPaneles(vistaPanelRegistro);
 
-        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnComponentesProductos)) {
-            PanelComponentesProducto vistaComponentes = new PanelComponentesProducto();
-            mostrarPaneles(vistaComponentes);
+//        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnComponentesProductos)) {
+//            PanelComponentesProducto vistaComponentes = new PanelComponentesProducto();
+//            mostrarPaneles(vistaComponentes);
         }
     }
 
@@ -72,14 +72,14 @@ public class ControladorVistaAdmin implements MouseListener {
         } else if (e.getComponent().equals(modelo.getVistaAdmin().btnProveedores)) {
             modelo.getVistaAdmin().btnProveedores.setBackground(new Color(50, 95, 110));
 
-        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnGestionInventario)) {
-            modelo.getVistaAdmin().btnGestionInventario.setBackground(new Color(50, 95, 110));
+////        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnGestionInventario)) {
+////            modelo.getVistaAdmin().btnGestionInventario.setBackground(new Color(50, 95, 110));
         } else if (e.getComponent().equals(modelo.getVistaAdmin().btnReportes)) {
             modelo.getVistaAdmin().btnReportes.setBackground(new Color(50, 95, 110));
         } else if (e.getComponent().equals(modelo.getVistaAdmin().btnRegistroUsuarios)) {
             modelo.getVistaAdmin().btnRegistroUsuarios.setBackground(new Color(50, 95, 110));
-        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnComponentesProductos)) {
-            modelo.getVistaAdmin().btnComponentesProductos.setBackground(new Color(50, 95, 110));
+//        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnComponentesProductos)) {
+//            modelo.getVistaAdmin().btnComponentesProductos.setBackground(new Color(50, 95, 110));
         }
     }
 
@@ -95,14 +95,14 @@ public class ControladorVistaAdmin implements MouseListener {
         } else if (e.getComponent().equals(modelo.getVistaAdmin().btnProveedores)) {
             modelo.getVistaAdmin().btnProveedores.setBackground(new Color(75, 128, 146));
 
-        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnGestionInventario)) {
-            modelo.getVistaAdmin().btnGestionInventario.setBackground(new Color(75, 128, 146));
+//        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnGestionInventario)) {
+//            modelo.getVistaAdmin().btnGestionInventario.setBackground(new Color(75, 128, 146));
         } else if (e.getComponent().equals(modelo.getVistaAdmin().btnReportes)) {
             modelo.getVistaAdmin().btnReportes.setBackground(new Color(75, 128, 146));
         } else if (e.getComponent().equals(modelo.getVistaAdmin().btnRegistroUsuarios)) {
             modelo.getVistaAdmin().btnRegistroUsuarios.setBackground(new Color(75, 128, 146));
-        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnComponentesProductos)) {
-            modelo.getVistaAdmin().btnComponentesProductos.setBackground(new Color(75, 128, 146));
+//        } else if (e.getComponent().equals(modelo.getVistaAdmin().btnComponentesProductos)) {
+//            modelo.getVistaAdmin().btnComponentesProductos.setBackground(new Color(75, 128, 146));
         }
     }
 

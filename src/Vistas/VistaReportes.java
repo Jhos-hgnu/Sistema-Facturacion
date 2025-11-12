@@ -26,10 +26,9 @@ public class VistaReportes extends javax.swing.JFrame {
     public VistaReportes() {
         initComponents();
         setLocationRelativeTo(null);
-
+        
         ModeloReporte modelo = new ModeloReporte();
         this.controlador = new ControladorReportes(modelo, this);
-
     }
 
     //Botones de la vista
