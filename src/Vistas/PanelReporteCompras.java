@@ -35,25 +35,25 @@ public class PanelReporteCompras extends javax.swing.JPanel {
         marcaAgua = new javax.swing.JLabel();
         btnSalir = new javax.swing.JPanel();
         salir = new javax.swing.JLabel();
+        separador = new javax.swing.JSeparator();
+        separador2 = new javax.swing.JSeparator();
+        tblcompras = new javax.swing.JScrollPane();
         btnporFecha = new javax.swing.JPanel();
         CompraFecha = new javax.swing.JLabel();
         btnProveedor = new javax.swing.JPanel();
         compraProveedor = new javax.swing.JLabel();
-        separador = new javax.swing.JSeparator();
-        separador2 = new javax.swing.JSeparator();
-        titulo1 = new javax.swing.JLabel();
-        FechaHasta = new com.github.lgooddatepicker.components.DatePicker();
-        jLabel6 = new javax.swing.JLabel();
-        FechaDesde = new com.github.lgooddatepicker.components.DatePicker();
-        labelBuscarP = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         btnexportar = new javax.swing.JPanel();
         registroVenta1 = new javax.swing.JLabel();
+        FechaDesde = new com.github.lgooddatepicker.components.DatePicker();
+        FechaHasta = new com.github.lgooddatepicker.components.DatePicker();
+        jLabel8 = new javax.swing.JLabel();
         labelBuscarP1 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        lblEstado = new javax.swing.JLabel();
-        tblcompras = new javax.swing.JScrollPane();
+        labelBuscarP = new javax.swing.JLabel();
         boxProveedor = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        titulo1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(850, 700));
 
@@ -75,40 +75,14 @@ public class PanelReporteCompras extends javax.swing.JPanel {
         });
         btnSalir.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        salir.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        salir.setForeground(new java.awt.Color(255, 255, 255));
         salir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         salir.setText("X");
         salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        salir.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        salir.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.add(salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 30, 30));
 
         fondoPanel.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 10, 30, 30));
-
-        btnporFecha.setBackground(new java.awt.Color(75, 128, 146));
-        btnporFecha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnporFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        CompraFecha.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        CompraFecha.setForeground(new java.awt.Color(255, 255, 255));
-        CompraFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CompraFecha.setText("Compras por fecha");
-        CompraFecha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnporFecha.add(CompraFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 5, 200, 20));
-
-        fondoPanel.add(btnporFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 210, 30));
-
-        btnProveedor.setBackground(new java.awt.Color(75, 128, 146));
-        btnProveedor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnProveedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        compraProveedor.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        compraProveedor.setForeground(new java.awt.Color(255, 255, 255));
-        compraProveedor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        compraProveedor.setText("Compras por proveedor");
-        compraProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnProveedor.add(compraProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 30));
-
-        fondoPanel.add(btnProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 210, 30));
 
         separador.setBackground(new java.awt.Color(255, 255, 255));
         separador.setForeground(new java.awt.Color(255, 255, 255));
@@ -117,69 +91,103 @@ public class PanelReporteCompras extends javax.swing.JPanel {
         separador2.setBackground(new java.awt.Color(255, 255, 255));
         separador2.setForeground(new java.awt.Color(255, 255, 255));
         fondoPanel.add(separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 850, -1));
+        fondoPanel.add(tblcompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 670, 260));
 
-        titulo1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
-        titulo1.setForeground(new java.awt.Color(255, 255, 255));
-        titulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo1.setText(" Reportes de compras.");
-        fondoPanel.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 780, -1));
-        fondoPanel.add(FechaHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, -1, -1));
+        btnporFecha.setBackground(new java.awt.Color(75, 128, 146));
+        btnporFecha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnporFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel6.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Fecha desde");
-        fondoPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
-        fondoPanel.add(FechaDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, -1, -1));
+        CompraFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CompraFecha.setText("Compras Fecha");
+        CompraFecha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        CompraFecha.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        CompraFecha.setForeground(new java.awt.Color(255, 255, 255));
+        btnporFecha.add(CompraFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 30));
 
-        labelBuscarP.setText("Por proveedor");
-        labelBuscarP.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        labelBuscarP.setForeground(new java.awt.Color(255, 255, 255));
-        fondoPanel.add(labelBuscarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, 20));
+        fondoPanel.add(btnporFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, 30));
 
-        jLabel7.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("Hasta");
-        fondoPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
+        btnProveedor.setBackground(new java.awt.Color(75, 128, 146));
+        btnProveedor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnProveedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        compraProveedor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        compraProveedor.setText("Compras Proveedor");
+        compraProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        compraProveedor.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        compraProveedor.setForeground(new java.awt.Color(255, 255, 255));
+        btnProveedor.add(compraProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 30));
+
+        fondoPanel.add(btnProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 280, 160, 30));
 
         btnexportar.setBackground(new java.awt.Color(75, 128, 146));
         btnexportar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnexportar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        registroVenta1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        registroVenta1.setForeground(new java.awt.Color(255, 255, 255));
         registroVenta1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         registroVenta1.setText("Exportar CSV");
         registroVenta1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnexportar.add(registroVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 30));
+        registroVenta1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        registroVenta1.setForeground(new java.awt.Color(255, 255, 255));
+        btnexportar.add(registroVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 30));
 
-        fondoPanel.add(btnexportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 270, 190, 30));
+        fondoPanel.add(btnexportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 280, 160, 30));
 
+        FechaDesde.setBackground(new java.awt.Color(75, 128, 146));
+        FechaDesde.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        fondoPanel.add(FechaDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, -1, -1));
+
+        FechaHasta.setBackground(new java.awt.Color(75, 128, 146));
+        FechaHasta.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        fondoPanel.add(FechaHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setText("Fecha Desde:");
+        fondoPanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, -1, -1));
+
+        labelBuscarP1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelBuscarP1.setText("Reporte de Compras por Fecha");
-        labelBuscarP1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        labelBuscarP1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         labelBuscarP1.setForeground(new java.awt.Color(255, 255, 255));
-        fondoPanel.add(labelBuscarP1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, -1, 20));
+        fondoPanel.add(labelBuscarP1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 270, 20));
 
-        jLabel11.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Proveedor");
-        fondoPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, -1, -1));
-        fondoPanel.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 190, 200, -1));
-        fondoPanel.add(tblcompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 690, 260));
+        labelBuscarP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelBuscarP.setText("Por proveedor");
+        labelBuscarP.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        labelBuscarP.setForeground(new java.awt.Color(255, 255, 255));
+        fondoPanel.add(labelBuscarP, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 200, 20));
 
+        boxProveedor.setModel(new javax.swing.DefaultComboBoxModel<ModeloReporteCompras.ModeloItem>());
         boxProveedor.setBackground(new java.awt.Color(75, 128, 146));
+        boxProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         boxProveedor.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         boxProveedor.setForeground(new java.awt.Color(255, 255, 255));
-        boxProveedor.setModel(new javax.swing.DefaultComboBoxModel<ModeloReporteCompras.ModeloItem>());
-        boxProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         boxProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boxProveedorActionPerformed(evt);
             }
         });
-        fondoPanel.add(boxProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 110, -1));
+        fondoPanel.add(boxProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 200, 110, -1));
+
+        jLabel11.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel11.setText("Proveedor:");
+        fondoPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, -1, -1));
+
+        titulo1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
+        titulo1.setForeground(new java.awt.Color(255, 255, 255));
+        titulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo1.setText("REPORTES COMPRAS");
+        fondoPanel.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 850, -1));
+
+        jLabel7.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel7.setText("Hasta:");
+        fondoPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, -1, -1));
+        fondoPanel.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 200, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -214,8 +222,8 @@ public class PanelReporteCompras extends javax.swing.JPanel {
     private javax.swing.JLabel compraProveedor;
     private javax.swing.JPanel fondoPanel;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel labelBuscarP;
     private javax.swing.JLabel labelBuscarP1;
     public javax.swing.JLabel lblEstado;
