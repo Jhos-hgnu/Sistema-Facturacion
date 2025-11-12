@@ -23,6 +23,8 @@ public class ControladorReportesVentas {
     private ControladorReportesVentas reportes;
 
     public ControladorReportesVentas() {
+        this.reporteDao = new ReporteVentaDAO();
+        this.csvGenerator = new GeneradorReporteVentas();
     }
 
     public ControladorReportesVentas(PanelReportesVentas vista, ReporteVentaDAO reporteDao, GeneradorReporteVentas csvGenerator) {
@@ -36,13 +38,13 @@ public class ControladorReportesVentas {
 
     }
 
-    /*no funciona*/
+    
     public void generarReporteVentasDiaCSV() {
         System.out.println("Goll ");
-        JOptionPane.showMessageDialog(null,
-                "Prueba ",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+//        JOptionPane.showMessageDialog(null,
+//                "Prueba1 ",
+//                "Error",
+//                JOptionPane.ERROR_MESSAGE);
         SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
             @Override
             protected Boolean doInBackground() throws Exception {
@@ -90,7 +92,7 @@ public class ControladorReportesVentas {
                         }
                     } else {
                         JOptionPane.showMessageDialog(null,
-                                "Error al generar el reporte CSV",
+                                "Error al generar el reporte CSV Ventas Día",
                                 "Error",
                                 JOptionPane.ERROR_MESSAGE);
                     }
@@ -488,7 +490,7 @@ public class ControladorReportesVentas {
                     
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null,
-                        "Error: " + e.getMessage(),
+                        "Error: exc" + e.getMessage(),
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
                 }

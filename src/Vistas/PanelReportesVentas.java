@@ -30,7 +30,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         btnGroupFiltroCliente.add(radBtnCosto);
         btnGroupFiltroCliente.add(radBtnMonto);
 
-        btnVentasRango.addActionListener(e -> {
+        btnReporteVentaDia.addActionListener(e -> {
             controlador.generarReporteVentasDiaCSV();
         });
 
@@ -82,7 +82,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         LocalDate fechaInicial = dateFechaFinalMC.getDate();
         LocalDate fechaFinal = dateFechaFinalMC.getDate();
 
-        DateTimeFormatter formatterOracle = DateTimeFormatter.ofPattern("dd-MMM-yy", Locale.ENGLISH);
+        DateTimeFormatter formatterOracle = DateTimeFormatter.ofPattern("yyyy-MMM-dd", Locale.ENGLISH);
 
         String fechaInicialOracle = fechaInicial.format(formatterOracle);
         String fechaFinalOracle = fechaFinal.format(formatterOracle);
@@ -122,7 +122,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         LocalDate fechaInicial = dateFechaInicioPMasVend.getDate();
         LocalDate fechaFinal = dateFechaFinalPMasVen.getDate();
         int valor = (int) spinnerTopPMVendidos.getValue();
-        DateTimeFormatter formatterOracle = DateTimeFormatter.ofPattern("dd-MMM-yy", Locale.ENGLISH);
+        DateTimeFormatter formatterOracle = DateTimeFormatter.ofPattern("yyyy-MMM-dd", Locale.ENGLISH);
 
         String fechaInicialOracle = fechaInicial.format(formatterOracle);
         String fechaFinalOracle = fechaFinal.format(formatterOracle);
@@ -140,7 +140,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         LocalDate fechaInicial = dateFechaInicioVenta.getDate();
         LocalDate fechaFinal = dateFechaFinalVentas.getDate();
         
-        DateTimeFormatter formatterOracle = DateTimeFormatter.ofPattern("dd-MMM-yy", Locale.ENGLISH);
+        DateTimeFormatter formatterOracle = DateTimeFormatter.ofPattern("yyyy-MMM-dd", Locale.ENGLISH);
         
         String fechaInicialOracle = fechaInicial.format(formatterOracle);
         String fechaFinalOracle = fechaFinal.format(formatterOracle);
@@ -174,7 +174,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
 
         btnGroupFiltroCliente = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnReporteVentaDia = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -221,12 +221,12 @@ public class PanelReportesVentas extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(75, 128, 146));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Generar Reporte ");
-        jButton1.setBackground(new java.awt.Color(28, 95, 118));
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 130, 30));
+        btnReporteVentaDia.setText("Generar Reporte ");
+        btnReporteVentaDia.setBackground(new java.awt.Color(28, 95, 118));
+        btnReporteVentaDia.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnReporteVentaDia.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnReporteVentaDia.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(btnReporteVentaDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 130, 30));
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Ventas del Día");
@@ -436,6 +436,7 @@ public class PanelReportesVentas extends javax.swing.JPanel {
     private javax.swing.ButtonGroup btnGroupFiltroCliente;
     private javax.swing.JButton btnMejoresClientes;
     private javax.swing.JButton btnProductosVendidos;
+    private javax.swing.JButton btnReporteVentaDia;
     private javax.swing.JPanel btnSalir;
     private javax.swing.JButton btnVentasMensuales;
     private javax.swing.JButton btnVentasRango;
@@ -445,7 +446,6 @@ public class PanelReportesVentas extends javax.swing.JPanel {
     private com.github.lgooddatepicker.components.DatePicker dateFechaInicioMC;
     private com.github.lgooddatepicker.components.DatePicker dateFechaInicioPMasVend;
     private com.github.lgooddatepicker.components.DatePicker dateFechaInicioVenta;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
